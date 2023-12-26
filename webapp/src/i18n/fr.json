@@ -1,0 +1,33 @@
+{
+  "app": {
+    "title": "On Brand"
+  },
+  "language": {
+    "short": {
+      "en": "En",
+      "fr": "Fr"
+    }
+  },
+  "game": {
+    "name": "Imagele"
+  },
+  "navigation": {
+    "game": "Imagele",
+    "library": "Librairie",
+    "login": "Se connecter",
+    "sing_up": "S'inscrire",
+    "generate": "Générateur",
+    "return_home": "Retour à la page d'accueil"
+  },
+  "error": {
+    "code": {
+      "404": "404"
+    },
+    "description": {
+      "not_found": "Page non trouvée"
+    }
+  },
+  "search": {
+    "place_holder": "Entrer du texte..."
+  }
+}
