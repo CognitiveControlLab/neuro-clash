@@ -9,10 +9,11 @@
     }
   },
   "game": {
-    "name": "Imagele"
+    "name": "Quel est ton type de ___ ?",
+    "type": "Ex: chien, voiture, ..."
   },
   "navigation": {
-    "game": "Imagele",
+    "game": "What's your type of?",
     "library": "Librairie",
     "login": "Se connecter",
     "sing_up": "S'inscrire",

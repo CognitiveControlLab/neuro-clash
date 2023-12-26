@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
+import QuizIcon from '@mui/icons-material/Quiz';
 import { useCallback } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Drawer as MUIDrawer } from '@mui/material';
@@ -80,7 +80,7 @@ function Drawer(props: DrawerProps): JSX.Element {
           <ListItem disablePadding>
             <ListItemButton onClick={() => drawerNavigate('/')}>
               <ListItemIcon>
-                <ColorLensIcon color="secondary" />
+                <QuizIcon color="secondary" />
               </ListItemIcon>
               <ListItemText primary={<FormattedMessage id="navigation.game" />} />
             </ListItemButton>
