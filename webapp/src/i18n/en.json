@@ -1,0 +1,34 @@
+{
+  "app": {
+    "title": "On Brand"
+  },
+  "language": {
+    "short": {
+      "en": "En",
+      "fr": "Fr"
+    }
+  },
+  "game": {
+    "name": "What's your type of ___ ?",
+    "type": "Ex: dog, car, etc."
+  },
+  "navigation": {
+    "game": "What's your type of?",
+    "library": "Library",
+    "login": "Login",
+    "sing_up": "Sign up",
+    "generate": "Generator",
+    "return_home": "Return to home page"
+  },
+  "error": {
+    "code": {
+      "404": "404"
+    },
+    "description": {
+      "not_found": "Page not found"
+    }
+  },
+  "search": {
+    "place_holder": "Enter a prompt..."
+  }
+}
