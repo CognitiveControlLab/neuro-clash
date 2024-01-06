@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "neuro-ai"
+version = "0.1.0"
+description = "AI project for the Neuro Clash game"
+authors = ["Anthony Richer"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.108.0"
+mne = "^1.6.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pylsl = "^1.16.2"
+ipykernel = "^6.28.0"
+muselsl = "^2.2.2"
+tk = "^0.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
