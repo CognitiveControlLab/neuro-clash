@@ -1,4 +1,4 @@
-# your-type-of
+# Neuro Clash
 
 ## Web app
 
