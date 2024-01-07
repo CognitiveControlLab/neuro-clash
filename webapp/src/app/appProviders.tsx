@@ -1,6 +1,4 @@
 import { ReactNode } from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
-import apolloClient from '../lib/apolloClient/apolloClient';
 import LanguageProvider from '../providers/LanguageProvider';
 import ThemeProvider from '../providers/ThemeProvider';
 
@@ -16,9 +14,7 @@ function AppProviders(props: AppProvidersProps) {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <ApolloProvider client={apolloClient}>
-          { children }
-        </ApolloProvider>
+        {children}
       </LanguageProvider>
     </ThemeProvider>
   );

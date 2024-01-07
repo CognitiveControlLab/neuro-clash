@@ -1,25 +1,20 @@
-import { Grid, Input } from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
-import Hints from './components/Hints/Hints';
-import { Container } from './styles';
+import { Container } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
+import { Canvas } from '@react-three/fiber';
 
 function Game() {
-  const { formatMessage } = useIntl();
-
   return (
-    <Grid container>
-      <Grid item xs={1} md={2} />
-      <Grid item xs={10} md={8}>
-        <Container>
-          <h1>
-            <FormattedMessage id="game.name" />
-          </h1>
-          <Input placeholder={formatMessage({ id: 'game.type' })} />
-          <Hints hints={[]} />
-        </Container>
-      </Grid>
-      <Grid item xs={1} md={2} />
-    </Grid>
+    <Container>
+      <FormattedMessage id="home.title" />
+      <Canvas>
+        <ambientLight intensity={0.1} />
+        <directionalLight color="red" position={[0, 0, 5]} />
+        <mesh>
+          <boxGeometry />
+          <meshStandardMaterial />
+        </mesh>
+      </Canvas>
+    </Container>
   );
 }
 

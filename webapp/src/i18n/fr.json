@@ -8,16 +8,12 @@
       "fr": "Fr"
     }
   },
-  "game": {
-    "name": "Quel est ton type de ___ ?",
-    "type": "Ex: chien, voiture, ..."
+  "home": {
+    "title": "Le jeu"
   },
   "navigation": {
-    "game": "What's your type of?",
-    "library": "Librairie",
     "login": "Se connecter",
     "sing_up": "S'inscrire",
-    "generate": "Générateur",
     "return_home": "Retour à la page d'accueil"
   },
   "error": {

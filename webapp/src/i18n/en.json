@@ -8,16 +8,12 @@
       "fr": "Fr"
     }
   },
-  "game": {
-    "name": "What's your type of ___ ?",
-    "type": "Ex: dog, car, etc."
+  "home": {
+    "title": "The game"
   },
   "navigation": {
-    "game": "What's your type of?",
-    "library": "Library",
     "login": "Login",
     "sing_up": "Sign up",
-    "generate": "Generator",
     "return_home": "Return to home page"
   },
   "error": {
