@@ -1,11 +1,26 @@
-import { Container } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { Button, Container } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
+import { useState } from 'react';
+import EEGSetup from '../../components/EEGSetup/EEGSetup';
+import { Header } from './styles';
 
 function Game() {
+  const [eegSetupOpen, setEEGSetupOpen] = useState(false);
+
+  const onEEGSetupClose = () => {
+    setEEGSetupOpen(false);
+  };
+
+  const onEEGSetupOpen = () => {
+    setEEGSetupOpen(true);
+  };
+
   return (
     <Container>
-      <FormattedMessage id="home.title" />
+      <Header>
+        <Button onClick={() => onEEGSetupOpen()}> EEG SETUP HERE !!!</Button>
+      </Header>
+      <EEGSetup open={eegSetupOpen} onClose={() => onEEGSetupClose()} />
       <Canvas>
         <ambientLight intensity={0.1} />
         <directionalLight color="red" position={[0, 0, 5]} />
