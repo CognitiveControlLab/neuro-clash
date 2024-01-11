@@ -1,7 +1,7 @@
 import { Button, Container, Dialog } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { ClipLoader } from 'react-spinners';
-import { ConnectionStatus, useEEG } from '../../providers/MuseProvider/EEGProvider';
+import { ConnectionStatus, useEEG } from '../../providers/EEGProvider';
 import {
   EEGContainer,
   Footer,

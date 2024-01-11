@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import LanguageProvider from '../providers/LanguageProvider';
 import ThemeProvider from '../providers/ThemeProvider';
-import EEGProvider from '../providers/MuseProvider';
+import EEGProvider from '../providers/EEGProvider';
 
 interface AppProvidersProps {
   children: ReactNode;
