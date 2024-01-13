@@ -11,6 +11,12 @@
   "home": {
     "title": "Le jeu"
   },
+  "eegSetup": {    
+    "noDeviceConnected": "Aucun appareil connecté",
+    "title": "Configuration de l'EEG",
+    "connect": "Connecter",
+    "disconnect": "Déconnecter"
+  },
   "navigation": {
     "login": "Se connecter",
     "sing_up": "S'inscrire",
