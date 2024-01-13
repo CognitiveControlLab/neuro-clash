@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import LanguageProvider from '../providers/LanguageProvider';
 import ThemeProvider from '../providers/ThemeProvider';
+import EEGProvider from '../providers/EEGProvider';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -14,7 +15,9 @@ function AppProviders(props: AppProvidersProps) {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        {children}
+        <EEGProvider>
+          {children}
+        </EEGProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

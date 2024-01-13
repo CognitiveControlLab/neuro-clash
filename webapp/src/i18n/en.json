@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "On Brand"
+    "title": "EEG Game"
   },
   "language": {
     "short": {
@@ -10,6 +10,12 @@
   },
   "home": {
     "title": "The game"
+  },
+  "eegSetup": {
+    "noDeviceConnected": "No device connected",
+    "title": "EEG Setup",
+    "connect": "Connect",
+    "disconnect": "Disconnect"
   },
   "navigation": {
     "login": "Login",
