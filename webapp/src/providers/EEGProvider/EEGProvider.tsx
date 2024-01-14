@@ -12,6 +12,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { EEGData, EEGDataType } from '../../types/EEGData';
 
 enum ConnectionStatus {
   DISCONNECTED,
@@ -19,26 +20,24 @@ enum ConnectionStatus {
   CONNECTED,
 }
 
-type EEGData = EEGReading | AccelerometerData | TelemetryData;
-
 type EEGManagerProps = {
-  setListener: (listener: (reading: EEGData) => void) => void;
+  setDataListener?: (listener: (reading: EEGData) => void) => void;
   connect: () => Promise<void>;
   disconnect: () => void;
   deviceInfo: EEGDeviceInfo;
 };
 
 type EEGDeviceInfo = {
-  name: string | null;
+  name?: string;
   status: ConnectionStatus;
 };
 
 const DefaultEEGContext: EEGManagerProps = {
-  setListener: () => { throw new Error('EEGProvider not initialized'); },
+  setDataListener: undefined,
   connect: () => { throw new Error('EEGProvider not initialized'); },
   disconnect: () => { throw new Error('EEGProvider not initialized'); },
   deviceInfo: {
-    name: null,
+    name: undefined,
     status: ConnectionStatus.DISCONNECTED,
   },
 };
@@ -67,14 +66,14 @@ function EEGProvider({
     }
   };
 
-  const setListener = (listener: (reading: EEGData) => void) => {
+  const setDataListener = (listener: (reading: EEGData) => void) => {
     eegListenerRef.current = listener;
   };
 
   const connect = async () => {
     try {
       setDeviceInfo(() => ({
-        name: null,
+        name: undefined,
         status: ConnectionStatus.CONNECTING,
       }));
 
@@ -82,23 +81,32 @@ function EEGProvider({
       await muse.start();
 
       setDeviceInfo(() => ({
-        name: muse.deviceName,
+        name: muse.deviceName || undefined,
         status: muse.connectionStatus ? ConnectionStatus.CONNECTED : ConnectionStatus.DISCONNECTED,
       }));
 
       muse.connectionStatus.subscribe((newStatus : boolean) => {
         setDeviceInfo(() => ({
-          name: newStatus ? muse.deviceName : null,
+          name: newStatus && muse.deviceName ? muse.deviceName : undefined,
           status: newStatus ? ConnectionStatus.CONNECTED : ConnectionStatus.DISCONNECTED,
         }));
       });
 
-      muse.eegReadings.subscribe(eegListener);
-      muse.telemetryData.subscribe(eegListener);
-      muse.accelerometerData.subscribe(eegListener);
+      muse.eegReadings.subscribe((data : EEGReading) => eegListener({
+        type: EEGDataType.EEG,
+        data,
+      }));
+      muse.telemetryData.subscribe((data : TelemetryData) => eegListener({
+        type: EEGDataType.TELEMETRY,
+        data,
+      }));
+      muse.accelerometerData.subscribe((data : AccelerometerData) => eegListener({
+        type: EEGDataType.ACCELEROMETER,
+        data,
+      }));
     } catch (e) {
       setDeviceInfo(() => ({
-        name: null,
+        name: undefined,
         status: ConnectionStatus.DISCONNECTED,
       }));
     }
@@ -109,7 +117,7 @@ function EEGProvider({
   };
 
   const eegContextState: EEGManagerProps = useMemo(() => ({
-    setListener,
+    setDataListener,
     connect,
     disconnect,
     deviceInfo,
@@ -122,7 +130,7 @@ function EEGProvider({
   );
 }
 
-export type { EEGManagerProps };
+export type { EEGManagerProps, EEGData };
 
 export { useEEG, ConnectionStatus };
 
