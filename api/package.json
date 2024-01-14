@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch ./src/index.ts",
-    "lint": "eslint . --ext --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "bun test"
   },
   "devDependencies": {
