@@ -1,4 +1,4 @@
-name: test-api
+name: Backend-api
 on:
     push:
       branches: [ "main" ]

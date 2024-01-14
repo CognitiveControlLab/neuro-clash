@@ -1,4 +1,4 @@
-name: lint-api
+name: Backend-api
 on:
     push:
       branches: [ "main" ]
