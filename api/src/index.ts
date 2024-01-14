@@ -39,7 +39,6 @@ SocketData
 });
 
 app.get('/', (req: Request, res: Response) => {
-  console.log('GET /', req.body);
   res.send('See you space cowboy...');
 });
 
