@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   run_tests:
-    name: Build and run tests
+    name: Build, run tests and lint
     runs-on: ubuntu-latest
     defaults:
       run:
