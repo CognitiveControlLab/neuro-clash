@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import LanguageProvider from '../providers/LanguageProvider';
 import ThemeProvider from '../providers/ThemeProvider';
 import EEGProvider from '../providers/EEGProvider';
+import GameClientProvider from '../providers/GameClientProvider';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -15,9 +16,11 @@ function AppProviders(props: AppProvidersProps) {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <EEGProvider>
-          {children}
-        </EEGProvider>
+        <GameClientProvider>
+          <EEGProvider>
+            {children}
+          </EEGProvider>
+        </GameClientProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

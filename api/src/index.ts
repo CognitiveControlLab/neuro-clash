@@ -6,17 +6,15 @@ import { createServer } from 'http';
 import express from 'express';
 
 interface ServerToClientEvents {
-  noArg: () => void;
-  basicEmit: (a: number, b: string, c: Buffer) => void;
-  withAck: (d: string, callback: (e: number) => void) => void;
+  progress: (data: any) => void;
 }
 
 interface ClientToServerEvents {
-  hello: () => void;
+  eegData: (data: any) => void;
 }
 
 interface InterServerEvents {
-  ping: () => void;
+  notUsedForNow: () => void;
 }
 
 interface SocketData {
@@ -37,9 +35,7 @@ SocketData
 >(server, {
   cors: {
     origin,
-    methods: ['GET', 'POST'],
   },
-  transports: ['websocket'],
 });
 
 app.get('/', (req: Request, res: Response) => {
@@ -47,21 +43,15 @@ app.get('/', (req: Request, res: Response) => {
   res.send('See you space cowboy...');
 });
 
-app.listen(port);
-
 io.on('connection', (socket) => {
-  console.log('client connected: ', socket.id);
-
-  socket.join('clock-room');
-
-  socket.on('disconnect', (reason) => {
-    console.log(reason);
+  socket.on('eegData', (payload) => {
+    if (payload.type === 'accelerometer') {
+      socket.emit('progress', { score: payload.data?.samples?.length ? payload.data.samples[0].x : 0 });
+    }
   });
 });
 
-setInterval(() => {
-  io.to('clock-room').emit('noArg');
-}, 1000);
+server.listen(port);
 
 // eslint-disable-next-line no-console
 console.log(`[app] Running ... \n[app] Url: http://localhost:${port}`);
