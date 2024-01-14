@@ -1,4 +1,4 @@
-name: build-api
+name: test-api
 on:
     push:
       branches: [ "main" ]
@@ -23,20 +23,3 @@ jobs:
         
       - name: Run tests
         run: bun test
-  run_lint:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: api
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup bun
-        uses: oven-sh/setup-bun@v1
-
-      - name: Install dependencies
-        run: bun install
-        
-      - name: Run lint
-        run: bun lint
