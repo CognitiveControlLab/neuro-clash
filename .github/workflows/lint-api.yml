@@ -6,7 +6,8 @@ on:
       branches: [ "main" ]
 
 jobs:
-  run_lint:    
+  run_lint:  
+    name: Run lint  
     runs-on: ubuntu-latest
     defaults:
       run:
