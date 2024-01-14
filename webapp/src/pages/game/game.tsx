@@ -1,19 +1,41 @@
-import { Container } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
-import { Canvas } from '@react-three/fiber';
+import { Button, Container } from '@mui/material';
+import { useEffect, useState } from 'react';
+import EEGSetup from '../../components/EEGSetup/EEGSetup';
+import { Header, GameScore } from './styles';
+import { useEEG } from '../../providers/EEGProvider';
+import { useGameClient } from '../../providers/GameClientProvider';
 
 function Game() {
+  const [eegSetupOpen, setEEGSetupOpen] = useState(false);
+  const { setDataListener } = useEEG();
+  const { progress, sendEEGData } = useGameClient();
+
+  const onEEGSetupClose = () => {
+    setEEGSetupOpen(false);
+  };
+
+  const onEEGSetupOpen = () => {
+    setEEGSetupOpen(true);
+  };
+
+  useEffect(() => {
+    if (setDataListener) {
+      setDataListener((data) => {
+        sendEEGData(data);
+      });
+    }
+  }, [sendEEGData, setDataListener]);
+
   return (
     <Container>
-      <FormattedMessage id="home.title" />
-      <Canvas>
-        <ambientLight intensity={0.1} />
-        <directionalLight color="red" position={[0, 0, 5]} />
-        <mesh>
-          <boxGeometry />
-          <meshStandardMaterial />
-        </mesh>
-      </Canvas>
+      <Header>
+        <Button onClick={() => onEEGSetupOpen()}> EEG SETUP HERE !!!</Button>
+      </Header>
+      <EEGSetup open={eegSetupOpen} onClose={() => onEEGSetupClose()} />
+      <GameScore>
+        <div>X POSITION</div>
+        <div>{progress?.score?.toFixed(3)}</div>
+      </GameScore>
     </Container>
   );
 }

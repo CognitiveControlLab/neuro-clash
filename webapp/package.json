@@ -21,6 +21,7 @@
     "@mui/styled-engine-sc": "^5.6.1",
     "@mui/system": "^5.8.5",
     "@react-three/fiber": "^8.15.13",
+    "muse-js": "^3.3.0",
     "postcss-syntax": "^0.36.2",
     "react": "^18.1.0",
     "react-dom": "^18.0.0",
@@ -28,6 +29,7 @@
     "react-router-dom": "^6.3.0",
     "react-spinners": "^0.13.3",
     "react-toastify": "^9.0.8",
+    "socket.io-client": "^4.7.4",
     "styled-components": "^5.3.5",
     "three": "^0.160.0"
   },
