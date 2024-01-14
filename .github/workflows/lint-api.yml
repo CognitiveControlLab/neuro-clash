@@ -7,7 +7,7 @@ on:
 
 jobs:
   run_lint:  
-    name: Lint  
+    name: Run lint  
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -16,5 +16,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install dependencies
+        run: bun install
+        
       - name: Run lint
-        run: yarn run eslint . --ext .js,.jsx,.ts,.tsx
+        run: bun lint
