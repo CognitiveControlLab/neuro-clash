@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: neuro-clash-api
+  template:
+    metadata:
+      labels:
+        app: neuro-clash-api
+    spec:
+      containers:
+      - name: neuro-clash-api
+        image: neuro-clash-api:latest
+        ports:
+        - containerPort: 8080
