@@ -7,13 +7,14 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { io } from 'socket.io-client';
 import { EEGData } from '../EEGProvider/EEGProvider';
+import socket from './socket';
 
 type GameClientContextProps = {
   connectionState: ConnectionState;
-  sendEEGData: (data: EEGData) => void;
+  sendEEGData: (userId: string, gameId: string, data: EEGData) => void;
   progress: any;
+  join: (userId: string, gameId: string) => void;
 };
 
 enum ConnectionState {
@@ -24,6 +25,7 @@ enum ConnectionState {
 const DefaultEEGContext: GameClientContextProps = {
   connectionState: ConnectionState.DISCONNECTED,
   sendEEGData: () => { throw new Error('GameClientProvider not initialized'); },
+  join: () => { throw new Error('GameClientProvider not initialized'); },
   progress: {},
 };
 
@@ -37,43 +39,52 @@ type GameClientProviderProps = {
 
 const useGameClient = () => useContext(GameClientContext);
 
-const socket = io('ws://localhost:5000', { transports: ['websocket'] });
-
 function GameClientProvider({
   children,
 }: GameClientProviderProps): JSX.Element {
-  const [connectionState, setConnectionState] = useState<ConnectionState>(DefaultEEGContext.connectionState); // eslint-disable-line max-len
+  const [connectionState, setConnectionState] = useState<ConnectionState>(
+    ConnectionState.DISCONNECTED,
+  );
   const [progress, setProgress] = useState(DefaultEEGContext.progress);
 
   useEffect(
     () => {
       socket.on('connect', () => setConnectionState(ConnectionState.CONNECTED));
       socket.on('disconnect', () => setConnectionState(ConnectionState.DISCONNECTED));
-
       socket.on('connect_error', () => {
         setTimeout(() => socket.connect(), 5000);
       });
 
       socket.on('progress', (data) => {
-        setProgress(data);
+        if (data) {
+          setProgress(data);
+        }
       });
 
       return () => {
-        socket?.disconnect();
+        socket.off('connect');
+        socket.off('disconnect');
+        socket.off('connect_error');
+        socket.off('progress');
       };
     },
     [],
   );
 
-  const sendEEGData = useCallback((data: EEGData) => {
-    socket.emit('eegData', data);
-  }, [socket]);
+  const sendEEGData = useCallback((userId: string, gameId: string, data: EEGData) => {
+    socket.emit('eegData', { data, userId, gameId });
+  }, []);
+
+  const join = useCallback((userId: string, gameId: string) => {
+    socket.emit('join', { userId, gameId });
+  }, []);
 
   const gameClient: GameClientContextProps = useMemo(() => ({
     connectionState,
     sendEEGData,
     progress,
-  }), [connectionState, sendEEGData, progress]);
+    join,
+  }), [join, connectionState, sendEEGData, progress]);
 
   return (
     <GameClientContext.Provider value={gameClient}>
@@ -82,6 +93,6 @@ function GameClientProvider({
   );
 }
 
-export { useGameClient };
+export { useGameClient, ConnectionState };
 
 export default GameClientProvider;

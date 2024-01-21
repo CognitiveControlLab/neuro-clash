@@ -4,26 +4,13 @@ import type {
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 import express from 'express';
+import type {
+  ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData,
+} from './lib/server/types';
+import { handleEEGData, handleJoinGame } from './lib/server';
 
-interface ServerToClientEvents {
-  progress: (data: any) => void;
-}
-
-interface ClientToServerEvents {
-  eegData: (data: any) => void;
-}
-
-interface InterServerEvents {
-  notUsedForNow: () => void;
-}
-
-interface SocketData {
-  name: string;
-  age: number;
-}
-
-const port = process.env.PORT || 5000;
-const origin = process.env.ORIGIN || 'http://localhost:3000';
+const port = process.env.PORT ?? 5000;
+const origin = process.env.ORIGIN ?? 'http://localhost:3000';
 
 const app: Application = express();
 const server = createServer(app);
@@ -43,11 +30,13 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('eegData', (payload) => {
-    if (payload.type === 'accelerometer') {
-      socket.emit('progress', { score: payload.data?.samples?.length ? payload.data.samples[0].x : 0 });
-    }
-  });
+  socket.on('eegData', (payload: any) => handleEEGData({
+    io, socket, payload,
+  }));
+
+  socket.on('join', (payload: any) => handleJoinGame({
+    io, socket, payload,
+  }));
 });
 
 server.listen(port);

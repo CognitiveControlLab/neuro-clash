@@ -7,6 +7,7 @@ import {
 import {
   ReactNode,
   createContext,
+  useCallback,
   useContext,
   useMemo,
   useRef,
@@ -15,13 +16,13 @@ import {
 import { EEGData, EEGDataType } from '../../types/EEGData';
 
 enum ConnectionStatus {
-  DISCONNECTED,
-  CONNECTING,
-  CONNECTED,
+  DISCONNECTED = 'DISCONNECTED',
+  CONNECTING = 'CONNECTING',
+  CONNECTED = 'CONNECTED',
 }
 
 type EEGManagerProps = {
-  setDataListener?: (listener: (reading: EEGData) => void) => void;
+  setDataListener: (listener: (reading: EEGData) => void) => void;
   connect: () => Promise<void>;
   disconnect: () => void;
   deviceInfo: EEGDeviceInfo;
@@ -33,7 +34,7 @@ type EEGDeviceInfo = {
 };
 
 const DefaultEEGContext: EEGManagerProps = {
-  setDataListener: undefined,
+  setDataListener: () => { throw new Error('EEGProvider not initialized'); },
   connect: () => { throw new Error('EEGProvider not initialized'); },
   disconnect: () => { throw new Error('EEGProvider not initialized'); },
   deviceInfo: {
@@ -70,7 +71,7 @@ function EEGProvider({
     eegListenerRef.current = listener;
   };
 
-  const connect = async () => {
+  const connect = useCallback(async () => {
     try {
       setDeviceInfo(() => ({
         name: undefined,
@@ -110,7 +111,7 @@ function EEGProvider({
         status: ConnectionStatus.DISCONNECTED,
       }));
     }
-  };
+  }, []);
 
   const disconnect = () => {
     muse.disconnect();
@@ -121,7 +122,7 @@ function EEGProvider({
     connect,
     disconnect,
     deviceInfo,
-  }), [deviceInfo]);
+  }), [deviceInfo, connect]);
 
   return (
     <EEGContext.Provider value={eegContextState}>

@@ -9,6 +9,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Game />} />
+      <Route path="/:gameId" element={<Game />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
