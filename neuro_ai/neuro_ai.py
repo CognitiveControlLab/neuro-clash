@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 import socketio
-import loguru
-
-logger = loguru.logger
+from loguru import logger
+from behaviors.concentration import Concentration
 
 # Create a FastAPI app
 app = FastAPI()
@@ -15,6 +14,9 @@ app = socketio.ASGIApp(sio, app)
 
 # Example namespace
 namespace = "/eeg"
+
+# Create the behaviors objects
+concentration = Concentration()
 
 
 @sio.event(namespace=namespace)
@@ -30,9 +32,13 @@ async def disconnect(sid):
 @sio.event(namespace=namespace)
 async def eegData(sid, data):
     logger.info(f"Received data: {data}")
-    await sio.emit(
-        "progress", data=data, to=sid, namespace=namespace
-    )
+
+    concentration.pre_process_data(data)
+    concentration_level = concentration.concentration_level(data)
+
+    logger.info(f"Concentration Level: {concentration_level}")
+
+    await sio.emit("progress", data=data, to=sid, namespace=namespace)
 
 
 if __name__ == "__main__":
