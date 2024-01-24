@@ -9,11 +9,8 @@ export const Header = styled.div`
   width: 100%;
 `;
 
-export const GameScore = styled.div`
+export const Container = styled.div`
   display: flex;
+  height: 100vh;
   flex: 1;
-  font-size: 3rem;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 `;
