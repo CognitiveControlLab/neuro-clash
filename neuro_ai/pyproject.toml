@@ -6,7 +6,7 @@ authors = ["Anthony Richer"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.10,<3.13"
 fastapi = "^0.108.0"
 mne = "^1.6.0"
 pandas = "^2.1.4"
@@ -23,6 +23,12 @@ muselsl = "^2.2.2"
 tk = "^0.1.0"
 isort = "^5.13.2"
 ruff = "^0.1.11"
+mne-lsl = "^1.1.1"
+pyqt5 = "^5.15.10"
+pyqt5-qt5 = "^5.15.12"
+pyqt5-sip = "^12.13.0"
+pyqtgraph = "^0.13.3"
+brainflow = "^5.12.0"
 
 
 [build-system]
