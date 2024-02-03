@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "bun --watch ./src/index.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "test": "bun test"
+    "test": "bun test",
+    "build:docker": "docker build --pull -t neuro-clash-api .",
+    "start:docker": "docker run -d -p 5000:5000 neuro-clash-api"
   },
   "devDependencies": {
     "@types/bun": "latest",
