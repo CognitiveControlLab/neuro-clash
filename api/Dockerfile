@@ -1,28 +1,25 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:alpine as base
+FROM oven/bun:debian as base
 WORKDIR /usr/src/app
 
 # install dependencies into temp directory
 # this will cache them and speed up future builds
 FROM base AS install
-WORKDIR /temp/dev
+RUN mkdir -p /temp/dev
 COPY package.json bun.lockb /temp/dev/
-RUN bun install --frozen-lockfile
+RUN cd /temp/dev && bun install --frozen-lockfile
 
 # install with --production (exclude devDependencies)
-WORKDIR /temp/prod
+RUN mkdir -p /temp/prod
 COPY package.json bun.lockb /temp/prod/
-RUN bun install --frozen-lockfile --production
-
-# copy all project files into the image
-WORKDIR /usr/src/app
-COPY . .
+RUN cd /temp/prod && bun install --frozen-lockfile --production
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
 FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
+COPY . .
 
 # TODO MAYBE?
 # [optional] tests & build
@@ -32,10 +29,9 @@ COPY --from=install /temp/dev/node_modules node_modules
 
 # copy production dependencies and source code into final image
 FROM base AS release
-WORKDIR /usr/src/app
 COPY --from=install /temp/prod/node_modules node_modules
-COPY src/index.ts .
-COPY package.json .
+COPY --from=prerelease /usr/src/app/src/index.ts .
+COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
 USER bun
