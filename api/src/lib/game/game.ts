@@ -47,9 +47,8 @@ class Game {
   }
 
   progress(userId: string, inputs: any): void {
-    if (this.players.has(userId)) {
-      const score = inputs.data?.samples?.length && inputs.type === 'accelerometer' ? inputs.data.samples[0].x : 0;
-      this.setCurrentScore(userId, score);
+    if (this.players.has(userId) && inputs.data?.samples?.length && inputs.type === 'accelerometer') {
+      this.setCurrentScore(userId, inputs.data.samples[0]);
     }
   }
 

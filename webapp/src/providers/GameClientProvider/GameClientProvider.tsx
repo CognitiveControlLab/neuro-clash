@@ -7,14 +7,16 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { EEGData } from '../EEGProvider/EEGProvider';
 import socket from './socket';
 
 type GameClientContextProps = {
   connectionState: ConnectionState;
-  sendEEGData: (userId: string, gameId: string, data: EEGData) => void;
+  sendEEGData: (gameId: string, data: EEGData) => void;
   progress: any;
-  join: (userId: string, gameId: string) => void;
+  join: (gameId: string) => void;
+  userId: string;
 };
 
 enum ConnectionState {
@@ -27,6 +29,7 @@ const DefaultEEGContext: GameClientContextProps = {
   sendEEGData: () => { throw new Error('GameClientProvider not initialized'); },
   join: () => { throw new Error('GameClientProvider not initialized'); },
   progress: {},
+  userId: `Player#${uuidv4().slice(0, 5)}`,
 };
 
 const GameClientContext = createContext<GameClientContextProps>(
@@ -41,7 +44,7 @@ const useGameClient = () => useContext(GameClientContext);
 
 function GameClientProvider({
   children,
-}: GameClientProviderProps): JSX.Element {
+}: Readonly<GameClientProviderProps>): JSX.Element {
   const [connectionState, setConnectionState] = useState<ConnectionState>(
     ConnectionState.DISCONNECTED,
   );
@@ -71,12 +74,19 @@ function GameClientProvider({
     [],
   );
 
-  const sendEEGData = useCallback((userId: string, gameId: string, data: EEGData) => {
-    socket.emit('eegData', { data, userId, gameId });
+  const sendEEGData = useCallback((gameId: string, data: EEGData) => {
+    socket.emit('eegData', {
+      data,
+      userId: DefaultEEGContext.userId,
+      gameId,
+    });
   }, []);
 
-  const join = useCallback((userId: string, gameId: string) => {
-    socket.emit('join', { userId, gameId });
+  const join = useCallback((gameId: string) => {
+    socket.emit('join', {
+      userId: DefaultEEGContext.userId,
+      gameId,
+    });
   }, []);
 
   const gameClient: GameClientContextProps = useMemo(() => ({
@@ -84,6 +94,7 @@ function GameClientProvider({
     sendEEGData,
     progress,
     join,
+    userId: DefaultEEGContext.userId,
   }), [join, connectionState, sendEEGData, progress]);
 
   return (
