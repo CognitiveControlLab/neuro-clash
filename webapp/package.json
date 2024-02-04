@@ -12,7 +12,10 @@
     "lint:code": "yarn eslint",
     "lint:styles": "yarn stylelint ./**/*.{tsx,ts}",
     "type-check": "yarn tsc",
-    "build:prod": "APP_ENV=production vite build"
+    "build:prod": "APP_ENV=production vite build",
+    "host": "vite --host",
+    "build:docker": "docker build -t webapp .",
+    "start:docker": "docker run -d -p 3000:3000 webapp"
   },
   "dependencies": {
     "@mui/icons-material": "5.8.4",
