@@ -1,5 +1,4 @@
 import { Canvas } from '@react-three/fiber';
-import { Stats } from '@react-three/drei';
 import { useGameClient } from '../../providers/GameClientProvider';
 
 interface BoxProps {
@@ -32,7 +31,6 @@ function GameView() {
           rotation={[score.x, 0, score.y]}
         />
       ))}
-      <Stats />
     </Canvas>
   );
 }
