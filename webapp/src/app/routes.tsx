@@ -2,9 +2,9 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import Game from '../pages/Game';
+import Home from '../pages/Home';
+import Game from '../pages/Game/Game';
 import NotFound from '../pages/NotFound';
-import Home from '../pages/Home/Home';
 
 function AppRoutes() {
   return (
