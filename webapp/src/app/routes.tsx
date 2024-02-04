@@ -2,8 +2,8 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import Game from '../pages/game';
-import NotFound from '../pages/notFound/notFound';
+import Game from '../pages/Game';
+import NotFound from '../pages/NotFound';
 
 function AppRoutes() {
   return (
