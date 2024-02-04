@@ -5,7 +5,6 @@ import pyqtgraph as pg
 
 from pyqtgraph.Qt import QtCore, QtWidgets
 import mne
-import pdb
 
 from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds
 
@@ -19,10 +18,10 @@ class Graph:
         self.board_shim = board_shim
         self.exg_channels = BoardShim.get_exg_channels(self.board_id)
         self.sampling_rate = BoardShim.get_sampling_rate(self.board_id)
-        self.update_speed_ms = 50
+        self.update_speed_ms = 100
         self.window_size = 4
         self.num_points = self.window_size * self.sampling_rate
-
+        self.data = {"alpha": [], "beta": [], "concentration": []}
         self.app = QtWidgets.QApplication([])
         self.win = pg.GraphicsLayoutWidget(title="BrainFlow Plot", size=(800, 600))
         self.win.show()
@@ -43,14 +42,16 @@ class Graph:
     def _init_timeseries(self):
         self.plots = list()
         self.curves = list()
+
         # for i in range(len(self.exg_channels)):
         p = self.win.addPlot(row=0, col=0)
-        p.showAxis("left", False)
-        p.setMenuEnabled("left", False)
-        p.showAxis("bottom", False)
-        p.setMenuEnabled("bottom", False)
+        p.showAxis("left")
+        p.setMenuEnabled("left")
+        p.showAxis("bottom")
+        p.setMenuEnabled("bottom")
         # if i == 0:
         p.setTitle("TimeSeries Plot")
+        self.plots.append(p)
         self.curves.extend([p.plot() for _ in range(len(self.exg_channels))])
 
     def set_data():
@@ -59,7 +60,7 @@ class Graph:
     def setup_mne_data(self, data):
         eeg_data = data[self.exg_channels, :]
 
-        eeg_data = eeg_data / 1000000  # BrainFlow returns uV, convert to V for MNE
+        # eeg_data = eeg_data / 1000000  # BrainFlow returns uV, convert to V for MNE
 
         raw = mne.io.RawArray(eeg_data, self.info)
         # Add a montage (only necessary for plotting)
@@ -79,8 +80,9 @@ class Graph:
         return raw_normalized
 
     def data_processing(self):
-        data = self.board_shim.get_current_board_data(self.num_points)
+        data = self.board_shim.get_current_board_data(50)
         raw = self.setup_mne_data(data)
+        # raw_data = self.get_data()
 
         psds, freqs = mne.time_frequency.psd_array_welch(
             raw.get_data(), self.sampling_rate, fmin=4, fmax=30, n_per_seg=256
@@ -89,7 +91,6 @@ class Graph:
         alpha_indices = np.where((freqs >= 8) & (freqs <= 12))[0]
         beta_indices = np.where((freqs >= 13) & (freqs <= 30))[0]
 
-        # Extract and average the power for alpha and beta bands
         alpha_power = psds[:, alpha_indices].mean(axis=1)
         beta_power = psds[:, beta_indices].mean(axis=1)
 
@@ -97,9 +98,49 @@ class Graph:
         mean_alpha_power = alpha_power.mean(axis=0)
         mean_beta_power = beta_power.mean(axis=0)
 
-        print(mean_alpha_power, mean_beta_power)
+        self.data["alpha"].append(mean_alpha_power)
+        self.data["beta"].append(mean_beta_power)
 
-        # self.curves[0].setData(mean_alpha_power)
+        beta_alpha_ratio = mean_beta_power / mean_alpha_power
+
+        # Set a threshold for concentration
+        # This value is arbitrary and should be adjusted based on your data
+        # concentration_threshold = 2
+
+        # # Identify concentrated epochs
+        # concentrated_epochs = beta_alpha_ratio > concentration_threshold
+        # self.data["concentration"].append(concentrated_epochs)
+        delta_alpha_power = np.diff(alpha_power)
+        delta_beta_power = np.diff(beta_power)
+
+        # Identify potential concentration points
+        concentration_points = []
+        for i in range(1, len(delta_alpha_power)):
+            if delta_alpha_power[i - 1] < 0 and delta_beta_power[i] > 0:
+                concentration_points.append(i)
+
+        if "alpha_beta_ratio" not in self.data:
+            self.data["alpha_beta_ratio"] = [beta_alpha_ratio]
+        else:
+            self.data["alpha_beta_ratio"].append(beta_alpha_ratio)
+
+        # Plotting Beta/Alpha Ratio
+        self.curves[0].setData(self.data["alpha_beta_ratio"])
+
+        if len(concentration_points) != 0:
+            self.plots[0].addLine(
+                x=len(self.data["alpha"]),
+                pen=pg.mkPen(color="g", style=pg.QtCore.Qt.DashLine),
+            )
+        # if concentrated_epochs:
+        #     self.plots[0].addLine(
+        #         x=len(self.data["alpha"]),
+        #         pen=pg.mkPen(color="g", style=pg.QtCore.Qt.DashLine),
+        #     )
+
+        # self.curves[0].setData(self.data)
+        # self.curves[1].setData(mean_beta_power)
+
         self.app.processEvents()
 
 
