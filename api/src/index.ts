@@ -7,9 +7,10 @@ import express from 'express';
 import type {
   ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData,
 } from './lib/server/types';
+import { io as sio } from 'socket.io-client';
 import { handleEEGData, handleJoinGame } from './lib/server';
 
-const port = process.env.PORT ?? 5000;
+const port = process.env.PORT ?? 6000;
 const origin = process.env.ORIGIN ?? 'http://localhost:3000';
 
 const app: Application = express();
@@ -39,7 +40,26 @@ io.on('connection', (socket) => {
   }));
 });
 
+
 server.listen(port);
+
+const socket = sio('http://127.0.0.1:9090/eeg', {transports: ['websocket']});
+
+
+socket.on("connect", () => {
+  console.log("connected to server");
+  socket.emit("event", "Hello from the client!");
+});
+
+// Listen for custom responses from the server
+socket.on("my_response", (data) => {
+  console.log("Response from server:", data);
+});
+
+socket.on("connect_error", (error) => {
+  console.error("Connection error:", error);
+});
 
 // eslint-disable-next-line no-console
 console.log(`[app] Running ... \n[app] Url: http://localhost:${port}`);
+
