@@ -84,7 +84,6 @@ function GameClientProvider({
       });
 
       socket.on('users', (data: any) => {
-        console.log('users data', data);
         if (data) {
           setUsers(data);
         }
