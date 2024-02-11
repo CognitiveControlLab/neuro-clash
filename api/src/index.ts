@@ -7,10 +7,10 @@ import express from 'express';
 import type {
   ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData,
 } from './lib/server/types';
-import { handleEEGData, handleJoinGame } from './lib/server';
+import { handleEEGData, handleJoinGame, handleToggleReady } from './lib/server';
 
 const port = process.env.PORT ?? 5000;
-const origin = process.env.ORIGIN ?? 'http://localhost:3000';
+const origin = process.env.ORIGIN ?? 'http://127.0.0.1:3000';
 
 const app: Application = express();
 const server = createServer(app);
@@ -37,9 +37,13 @@ io.on('connection', (socket) => {
   socket.on('join', (payload: any) => handleJoinGame({
     io, socket, payload,
   }));
+
+  socket.on('toggleReady', (payload: any) => handleToggleReady({
+    io, socket, payload,
+  }));
 });
 
 server.listen(port);
 
 // eslint-disable-next-line no-console
-console.log(`[app] Running ... \n[app] Url: http://localhost:${port}`);
+console.log(`[app] Running ... \n[app] Url: http://127.0.0.1:${port}`);

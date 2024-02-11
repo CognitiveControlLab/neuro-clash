@@ -1,8 +1,8 @@
 import type { Route } from './types';
 import Game from '../game';
 
-function handleJoinGame(props : Route) {
-  const { io, socket, payload } = props;
+function handleToggleReady(props : Route) {
+  const { io, payload } = props;
   const { userId, gameId } = payload;
 
   if (!userId || !gameId) {
@@ -11,11 +11,10 @@ function handleJoinGame(props : Route) {
 
   const gameInstance = Game.getOrCreate(gameId);
 
-  gameInstance.join(userId);
-
-  socket.join(gameId);
+  gameInstance.toggleReady(userId);
 
   io.to(gameId).emit('users', gameInstance.getUsersArray());
+  io.to(gameId).emit('status', gameInstance.getStatus());
 }
 
-export default handleJoinGame;
+export default handleToggleReady;

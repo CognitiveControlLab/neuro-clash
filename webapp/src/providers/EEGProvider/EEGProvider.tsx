@@ -23,7 +23,7 @@ enum ConnectionStatus {
 
 type EEGManagerProps = {
   setDataListener: (listener: (reading: EEGData) => void) => void;
-  connect: () => Promise<void>;
+  connect: (fake?: boolean) => Promise<void>;
   disconnect: () => void;
   deviceInfo: EEGDeviceInfo;
 };
@@ -71,7 +71,15 @@ function EEGProvider({
     eegListenerRef.current = listener;
   };
 
-  const connect = useCallback(async () => {
+  const connect = useCallback(async (fake: boolean = false) => {
+    if (fake) {
+      setDeviceInfo(() => ({
+        name: 'Fake Muse',
+        status: ConnectionStatus.CONNECTED,
+      }));
+      return;
+    }
+
     try {
       setDeviceInfo(() => ({
         name: undefined,

@@ -2,11 +2,14 @@ import type { Server, Socket } from 'socket.io';
 
 interface ServerToClientEvents {
   progress: (data: any) => void;
+  users: (data: any) => void;
+  status: (data: any) => void;
 }
 
 interface ClientToServerEvents {
   eegData: (payload: any) => void;
   join: (payload: any) => void;
+  toggleReady: (payload: any) => void;
 }
 
 interface InterServerEvents {
