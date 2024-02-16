@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port on which the application will run
-EXPOSE 8080
+EXPOSE 9090
 
 # Run the FastAPI application using uvicorn server
-CMD ["uvicorn", "neuro_ai:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "neuro_ai:app", "--host", "0.0.0.0", "--port", "9090"]

@@ -19,6 +19,9 @@ install-pyenv:
 install-python:
 	pyenv install 3.11
 
+start-api:
+	poetry run uvicorn neuro_ai:app --reload --port 9090
+
 init:
 	poetry shell
 	poerty install
