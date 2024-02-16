@@ -15,7 +15,13 @@
     "noDeviceConnected": "Aucun appareil connecté",
     "title": "Configuration de l'EEG",
     "connect": "Connecter",
-    "disconnect": "Déconnecter"
+    "disconnect": "Déconnecter",
+    "fakeConnect": "Simuler la connexion (Seulement en dev)"
+  },
+  "lobby": {
+    "ready": "Prêt",
+    "not_ready": "Pas prêt",
+    "waiting_for_players": "En attente d'un joueur..."
   },
   "navigation": {
     "login": "Se connecter",

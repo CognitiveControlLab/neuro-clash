@@ -4,6 +4,7 @@ import { ConnectionStatus, useEEG } from '../../providers/EEGProvider';
 import { ConnectionState, useGameClient } from '../../providers/GameClientProvider';
 import GameView from './GameView';
 import { Container } from './styles';
+import Lobby from './components/Lobby/Lobby';
 
 function Game() {
   const { gameId } = useParams();
@@ -12,21 +13,29 @@ function Game() {
     connectionState,
     sendEEGData,
     join,
+    status,
   } = useGameClient();
+
+  useEffect(() => {
+    if (gameId && connectionState === ConnectionState.CONNECTED) {
+      join(gameId);
+    }
+  }, [gameId, join, connectionState]);
 
   useEffect(() => {
     if (deviceInfo.status === ConnectionStatus.CONNECTED
       && connectionState === ConnectionState.CONNECTED && gameId) {
-      join(gameId);
       setDataListener((data) => {
-        sendEEGData(gameId, data);
+        sendEEGData(data);
       });
     }
-  }, [sendEEGData, setDataListener, join, connectionState, deviceInfo.status, gameId]);
+  }, [sendEEGData, setDataListener, connectionState, deviceInfo.status, gameId]);
 
   return (
     <Container>
-      <GameView />
+      { status === 'waiting' && <Lobby />}
+      { status === 'started' && <GameView />}
+      { status === 'finished' && <h1>Game Over</h1>}
     </Container>
   );
 }

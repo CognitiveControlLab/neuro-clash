@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "webapp"
+		},
+		{
+			"path": "api"
+		},
+		{
+			"path": "neuro_ai"
+		}
+	],
+	"settings": {}
+}
