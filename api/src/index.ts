@@ -4,6 +4,7 @@ import type {
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 import express from 'express';
+// import { io as sio } from 'socket.io-client';
 import type {
   ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData,
 } from './lib/server/types';
@@ -43,27 +44,24 @@ io.on('connection', (socket) => {
   }));
 });
 
-
 server.listen(port);
 
-
 // TODO: Remove this
-const socket = sio('http://127.0.0.1:9090/eeg', {transports: ['websocket']});
+// const socket = sio('http://127.0.0.1:9090/eeg', { transports: ['websocket'] });
 
+// socket.on('connect', () => {
+//   console.log('connected to server');
+//   socket.emit('event', 'Hello from the client!');
+// });
 
-socket.on("connect", () => {
-  console.log("connected to server");
-  socket.emit("event", "Hello from the client!");
-});
+// // Listen for custom responses from the server
+// socket.on('my_response', (data) => {
+//   console.log('Response from server:', data);
+// });
 
-// Listen for custom responses from the server
-socket.on("my_response", (data) => {
-  console.log("Response from server:", data);
-});
-
-socket.on("connect_error", (error) => {
-  console.error("Connection error:", error);
-});
+// socket.on('connect_error', (error) => {
+//   console.error('Connection error:', error);
+// });
 // TODO: END
 
 // eslint-disable-next-line no-console
