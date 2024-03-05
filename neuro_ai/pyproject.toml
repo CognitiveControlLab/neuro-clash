@@ -30,7 +30,8 @@ pyqtgraph = "^0.13.3"
 brainflow = "^5.12.0"
 flake8-pyproject = "^1.2.3"
 
-[tool.flake8]
+[flake8]
+ignore = "E501"
 max-line-length = 120
 extend-ignore = "E203"
 

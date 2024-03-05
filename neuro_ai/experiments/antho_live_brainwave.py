@@ -31,6 +31,8 @@ class Graph:
         ch_types = ["eeg", "eeg", "eeg", "eeg"]
         ch_names = ["TP9", "AF7", "AF8", "TP10"]
 
+        # Initialize the line object outside the loop
+        self.concentration_lines = []
         self.info = mne.create_info(
             ch_names=ch_names, sfreq=self.sampling_rate, ch_types=ch_types
         )
@@ -105,41 +107,29 @@ class Graph:
 
         # Set a threshold for concentration
         # This value is arbitrary and should be adjusted based on your data
-        # concentration_threshold = 2
+        concentration_threshold = 2
 
         # # Identify concentrated epochs
-        # concentrated_epochs = beta_alpha_ratio > concentration_threshold
-        # self.data["concentration"].append(concentrated_epochs)
-        delta_alpha_power = np.diff(alpha_power)
-        delta_beta_power = np.diff(beta_power)
-
-        # Identify potential concentration points
-        concentration_points = []
-        for i in range(1, len(delta_alpha_power)):
-            if delta_alpha_power[i - 1] < 0 and delta_beta_power[i] > 0:
-                concentration_points.append(i)
-
-        if "alpha_beta_ratio" not in self.data:
-            self.data["alpha_beta_ratio"] = [beta_alpha_ratio]
-        else:
-            self.data["alpha_beta_ratio"].append(beta_alpha_ratio)
+        is_concentrated = beta_alpha_ratio > concentration_threshold
+        self.data["concentration"].append(is_concentrated)
 
         # Plotting Beta/Alpha Ratio
-        self.curves[0].setData(self.data["alpha_beta_ratio"])
+        self.curves[0].setData(self.data["alpha"][-50:], pen=pg.mkPen(color="r"))
+        self.curves[1].setData(self.data["beta"][-50:], pen=pg.mkPen(color="g"))
 
-        if len(concentration_points) != 0:
-            self.plots[0].addLine(
-                x=len(self.data["alpha"]),
-                pen=pg.mkPen(color="g", style=pg.QtCore.Qt.DashLine),
+        if is_concentrated:
+            # Add a new line
+            self.concentration_lines.append(
+                self.plots[0].addLine(
+                    x=len(self.concentration_lines[-50:]) - 1,
+                    pen=pg.mkPen(color="pink", style=pg.QtCore.Qt.DashLine),
+                )
             )
-        # if concentrated_epochs:
-        #     self.plots[0].addLine(
-        #         x=len(self.data["alpha"]),
-        #         pen=pg.mkPen(color="g", style=pg.QtCore.Qt.DashLine),
-        #     )
-
-        # self.curves[0].setData(self.data)
-        # self.curves[1].setData(mean_beta_power)
+        else:
+            self.concentration_lines.append(None)
+        for i, line in enumerate(self.concentration_lines[-50:]):
+            if line:
+                line.setValue(i)
 
         self.app.processEvents()
 
