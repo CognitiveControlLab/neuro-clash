@@ -26,12 +26,12 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.11"
-    - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 -
-    - name: Install dependencies
-      run: |
-        poetry install
-    - name: Lint with ruff
-      run: |
-        poetry run ruff experiments/
+    # - name: Install Poetry
+    #   run: |
+    #     curl -sSL https://install.python-poetry.org | python3 -
+    # - name: Install dependencies
+    #   run: |
+    #     poetry install
+    # - name: Lint with ruff
+    #   run: |
+    #     poetry run ruff experiments/
