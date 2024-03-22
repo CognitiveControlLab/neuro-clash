@@ -1,4 +1,5 @@
 import type { Server, Socket } from 'socket.io';
+import { Socket as ClientSocket } from 'socket.io-client';
 
 interface ServerToClientEvents {
   progress: (data: any) => void;
@@ -27,10 +28,15 @@ interface Route {
   payload: any;
 }
 
+interface Proxy extends Route {
+  proxySocket: ClientSocket;
+}
+
 export type {
   ServerToClientEvents,
   ClientToServerEvents,
   InterServerEvents,
   SocketData,
   Route,
+  Proxy,
 };
