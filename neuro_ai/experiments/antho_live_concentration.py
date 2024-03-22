@@ -56,9 +56,6 @@ class Graph:
         self.plots.append(p)
         self.curves.extend([p.plot() for _ in range(len(self.exg_channels))])
 
-    def set_data():
-        pass
-
     def setup_mne_data(self, data):
         eeg_data = data[self.exg_channels, :]
 
@@ -107,7 +104,7 @@ class Graph:
 
         # Set a threshold for concentration
         # This value is arbitrary and should be adjusted based on your data
-        concentration_threshold = 2
+        concentration_threshold = 3
 
         # # Identify concentrated epochs
         is_concentrated = beta_alpha_ratio > concentration_threshold
