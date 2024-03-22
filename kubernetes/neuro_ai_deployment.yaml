@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neuro-ai-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: neuro-ai-api
+  template:
+    metadata:
+      labels:
+        app: neuro-ai-api
+    spec:
+      containers:
+      - name: neuro-ai-api
+        image: neuro-ai:latest
+        ports:
+        - containerPort: 8081
