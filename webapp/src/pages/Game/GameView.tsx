@@ -1,5 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { useGameClient } from '../../providers/GameClientProvider';
+import { Container, OverlayContainer, StatsOverlay } from './styles';
+import RadarChart from '../../components/RadarChart';
 
 interface BoxProps {
   position: [number, number, number];
@@ -23,15 +25,22 @@ function GameView() {
   } = useGameClient();
 
   return (
-    <Canvas shadows>
-      <ambientLight intensity={0.5} />
-      { progress?.scores?.map(({ score }: any, index : number) => (
-        <Box
-          position={[-2 + (index * 4), 0, 0]}
-          rotation={[score.x, 0, score.y]}
-        />
-      ))}
-    </Canvas>
+    <Container>
+      <Canvas shadows>
+        <ambientLight intensity={0.5} />
+        { progress?.scores?.map(({ score }: any, index : number) => (
+          <Box
+            position={[-2 + (index * 4), 0, 0]}
+            rotation={[score.x, 0, score.y]}
+          />
+        ))}
+      </Canvas>
+      <OverlayContainer>
+        <StatsOverlay>
+          <RadarChart />
+        </StatsOverlay>
+      </OverlayContainer>
+    </Container>
   );
 }
 
