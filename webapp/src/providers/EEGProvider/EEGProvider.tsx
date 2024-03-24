@@ -77,6 +77,45 @@ function EEGProvider({
         name: 'Fake Muse',
         status: ConnectionStatus.CONNECTED,
       }));
+
+      setInterval(() => {
+        eegListener({
+          type: EEGDataType.EEG,
+          data: {
+            electrode: 0,
+            index: 1589,
+            samples: [-355.46875,
+              999.51171875,
+              419.43359375,
+              -1000,
+              -836.9140625,
+              753.90625,
+              909.66796875,
+              -620.60546875,
+              -1000,
+              34.1796875,
+              999.51171875,
+              18.5546875],
+            timestamp: 1711301518161.5,
+          },
+        });
+        eegListener({
+          type: EEGDataType.ACCELEROMETER,
+          data: {
+            sequenceId: 11662,
+            samples: [{ x: Math.random(), y: Math.random(), z: Math.random() },
+              { x: Math.random(), y: Math.random(), z: Math.random() },
+              { x: Math.random(), y: Math.random(), z: Math.random() }],
+          },
+        });
+        eegListener({
+          type: EEGDataType.TELEMETRY,
+          data: {
+            sequenceId: 64, batteryLevel: 55, fuelGaugeVoltage: 3218.6000000000004, temperature: 0,
+          },
+        });
+      }, 100);
+
       return;
     }
 

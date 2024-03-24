@@ -28,10 +28,10 @@ async def disconnect(sid):
 
 
 @sio.event(namespace=namespace)
-async def event(sid, data):
+async def eegData(sid, data):
     logger.info(f"Received data: {data}")
     await sio.emit(
-        "my_response", data={"responsec": "Data received!"}, to=sid, namespace=namespace
+        "progress", data=data, to=sid, namespace=namespace
     )
 
 
