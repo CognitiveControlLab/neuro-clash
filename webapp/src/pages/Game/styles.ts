@@ -28,7 +28,7 @@ export const StatsOverlay = styled.div`
   margin: 10px;
   border-radius: 10px;
   align-items: center;
-  width: 100%;
+  width: 600px;
   height: 250px;
   background-color: #fff;
   border: 1px solid #e6e6e6;

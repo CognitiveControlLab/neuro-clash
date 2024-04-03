@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber';
 import { useGameClient } from '../../providers/GameClientProvider';
 import { Container, OverlayContainer, StatsOverlay } from './styles';
 import RadarChart from '../../components/RadarChart';
+import BankChart from '../../components/BankChart';
 
 interface BoxProps {
   position: [number, number, number];
@@ -37,7 +38,20 @@ function GameView() {
       </Canvas>
       <OverlayContainer>
         <StatsOverlay>
-          <RadarChart />
+          {/* Use progress from the server */}
+          <RadarChart items={[
+            { label: 'Concentration', value: 1 },
+            { label: 'Alertness', value: 2 },
+            { label: 'Will', value: 3 },
+          ]}
+          />
+          {/* Use progress from the server */}
+          <BankChart items={[
+            { color: 'red', max: 100, value: 50 },
+            { color: 'blue', max: 100, value: 20 },
+            { color: 'yellow', max: 100, value: 20 },
+          ]}
+          />
         </StatsOverlay>
       </OverlayContainer>
     </Container>
