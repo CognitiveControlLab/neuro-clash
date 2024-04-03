@@ -14,15 +14,20 @@ ChartJS.register(
   LineElement,
 );
 
-function RadarChart() {
+interface RadarChartProps {
+  items: Array<{ label: string, value: number }>;
+}
+
+function RadarChart(props: RadarChartProps) {
+  const { items } = props;
   return (
     <Radar data={{
-      labels: ['Exitation', 'Calme', 'Will', 'Focus', 'Stress'],
+      labels: items.map((item) => item.label),
       datasets: [
         {
           label: 'State',
           fill: true,
-          data: [2, 9, 3, 1, 2],
+          data: items.map((item) => item.value),
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgb(54, 162, 235)',
           pointBackgroundColor: 'rgb(54, 162, 235)',
