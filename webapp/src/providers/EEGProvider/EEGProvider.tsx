@@ -81,7 +81,7 @@ function EEGProvider({
       setInterval(() => {
         eegListener({
           type: EEGDataType.EEG,
-          data: {
+          data: [{
             electrode: 0,
             index: 1589,
             samples: [-355.46875,
@@ -97,7 +97,7 @@ function EEGProvider({
               999.51171875,
               18.5546875],
             timestamp: 1711301518161.5,
-          },
+          }],
         });
         eegListener({
           type: EEGDataType.ACCELEROMETER,
@@ -140,14 +140,26 @@ function EEGProvider({
         }));
       });
 
-      muse.eegReadings.subscribe((data : EEGReading) => eegListener({
-        type: EEGDataType.EEG,
-        data,
-      }));
+      let eegReadingBuffer : EEGReading[] = [];
+      muse.eegReadings.subscribe((data : EEGReading) => {
+        if (eegReadingBuffer.length === 0 || eegReadingBuffer[0].index === data.index) {
+          eegReadingBuffer.push(data);
+          return;
+        }
+
+        eegListener({
+          type: EEGDataType.EEG,
+          data: eegReadingBuffer.sort((a, b) => a.electrode - b.electrode),
+        });
+
+        eegReadingBuffer = [data];
+      });
+
       muse.telemetryData.subscribe((data : TelemetryData) => eegListener({
         type: EEGDataType.TELEMETRY,
         data,
       }));
+
       muse.accelerometerData.subscribe((data : AccelerometerData) => eegListener({
         type: EEGDataType.ACCELEROMETER,
         data,
