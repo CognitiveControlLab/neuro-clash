@@ -8,7 +8,7 @@ export enum EEGDataType {
 
 export type EEGData = {
   type: EEGDataType.EEG,
-  data: EEGReading,
+  data: Array<EEGReading>,
 } | {
   type: EEGDataType.TELEMETRY,
   data: TelemetryData,
