@@ -15,7 +15,13 @@
     "noDeviceConnected": "No device connected",
     "title": "EEG Setup",
     "connect": "Connect",
-    "disconnect": "Disconnect"
+    "disconnect": "Disconnect",
+    "fakeConnect": "Fake it! (Only in dev)"
+  },
+  "lobby": {
+    "ready": "Ready",
+    "not_ready": "Not ready",
+    "waiting_for_players": "Waiting for a player..."
   },
   "navigation": {
     "login": "Login",

@@ -3,21 +3,32 @@ class User {
 
   private score: number;
 
+  private ready: boolean;
+
   constructor(id: string) {
     this.id = id;
     this.score = 0;
+    this.ready = false;
   }
 
-  setScore(score: number): void {
+  public setScore(score: number): void {
     this.score = score;
   }
 
-  getScore(): number {
+  public getScore(): number {
     return this.score;
   }
 
-  getId(): string {
+  public getId(): string {
     return this.id;
+  }
+
+  public setReady(ready: boolean): void {
+    this.ready = ready;
+  }
+
+  public isReady(): boolean {
+    return this.ready;
   }
 }
 

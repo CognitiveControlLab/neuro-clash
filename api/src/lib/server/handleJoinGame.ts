@@ -2,7 +2,7 @@ import type { Route } from './types';
 import Game from '../game';
 
 function handleJoinGame(props : Route) {
-  const { socket, payload } = props;
+  const { io, socket, payload } = props;
   const { userId, gameId } = payload;
 
   if (!userId || !gameId) {
@@ -14,6 +14,8 @@ function handleJoinGame(props : Route) {
   gameInstance.join(userId);
 
   socket.join(gameId);
+
+  io.to(gameId).emit('users', gameInstance.getUsersArray());
 }
 
 export default handleJoinGame;

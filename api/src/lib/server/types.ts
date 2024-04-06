@@ -1,12 +1,16 @@
 import type { Server, Socket } from 'socket.io';
+import { Socket as ClientSocket } from 'socket.io-client';
 
 interface ServerToClientEvents {
   progress: (data: any) => void;
+  users: (data: any) => void;
+  status: (data: any) => void;
 }
 
 interface ClientToServerEvents {
   eegData: (payload: any) => void;
   join: (payload: any) => void;
+  toggleReady: (payload: any) => void;
 }
 
 interface InterServerEvents {
@@ -24,10 +28,15 @@ interface Route {
   payload: any;
 }
 
+interface Proxy extends Route {
+  proxySocket: ClientSocket;
+}
+
 export type {
   ServerToClientEvents,
   ClientToServerEvents,
   InterServerEvents,
   SocketData,
   Route,
+  Proxy,
 };

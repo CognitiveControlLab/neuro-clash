@@ -52,4 +52,43 @@ describe('game', () => {
 
     expect(Game.getOrCreate('gameId')).toEqual(instance);
   });
+
+  it('Expect to start only after the two player are ready', () => {
+    const instance = Game.getOrCreate('gameId');
+
+    // Player join
+    instance.join('playerId1');
+    instance.join('playerId2');
+
+    // Player toggle ready
+    instance.toggleReady('playerId1');
+    expect(instance.getStatus()).toEqual('waiting');
+    instance.toggleReady('playerId1');
+    expect(instance.getStatus()).toEqual('waiting');
+    instance.toggleReady('playerId2');
+    expect(instance.getStatus()).toEqual('waiting');
+    instance.toggleReady('playerId2');
+    expect(instance.getStatus()).toEqual('waiting');
+
+    // Two player are ready
+    instance.toggleReady('playerId1');
+    instance.toggleReady('playerId2');
+
+    expect(instance.getStatus()).toEqual('started');
+  });
+
+  it('Expect to start with spectators', () => {
+    const instance = Game.getOrCreate('gameId');
+
+    // Player join
+    instance.join('playerId1');
+    instance.join('playerId2');
+    instance.join('spectatorId1');
+
+    // Player toggle ready
+    instance.toggleReady('playerId1');
+    instance.toggleReady('playerId2');
+
+    expect(instance.getStatus()).toEqual('started');
+  });
 });
