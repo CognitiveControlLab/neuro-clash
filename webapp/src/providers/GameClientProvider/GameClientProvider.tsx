@@ -30,12 +30,14 @@ type GameClientContextProps = {
   // Join a game
   join: (gameId: string) => void;
   // User id of the current player
-  userId: string;
+  me: UserInfo | undefined;
   // Status of the game
   status: GameStatus;
   // Toggle ready status
   toggleReady: () => void;
 };
+
+const userId = `Player#${uuidv4().slice(0, 5)}`;
 
 const DefaultEEGContext: GameClientContextProps = {
   connectionState: ConnectionState.DISCONNECTED,
@@ -43,8 +45,11 @@ const DefaultEEGContext: GameClientContextProps = {
   join: () => { throw new Error('GameClientProvider not initialized'); },
   progress: {},
   status: GameStatus.WAITING,
-  userId: `Player#${uuidv4().slice(0, 5)}`,
   users: [],
+  me: {
+    id: userId,
+    ready: false,
+  },
   toggleReady: () => { throw new Error('GameClientProvider not initialized'); },
 };
 
@@ -112,7 +117,7 @@ function GameClientProvider({
 
     socket.emit('eegData', {
       data,
-      userId: DefaultEEGContext.userId,
+      userId,
       gameId,
     });
   }, [gameId]);
@@ -120,7 +125,7 @@ function GameClientProvider({
   const join = useCallback((newGameId: string) => {
     setGameId(newGameId);
     socket.emit('join', {
-      userId: DefaultEEGContext.userId,
+      userId,
       gameId: newGameId,
     });
   }, []);
@@ -131,10 +136,12 @@ function GameClientProvider({
     }
 
     socket.emit('toggleReady', {
-      userId: DefaultEEGContext.userId,
+      userId,
       gameId,
     });
   }, [gameId]);
+
+  const me = useMemo(() => users.find((user) => user.id === userId), [users]);
 
   const gameClient: GameClientContextProps = useMemo(() => ({
     connectionState,
@@ -142,10 +149,10 @@ function GameClientProvider({
     toggleReady,
     progress,
     join,
-    userId: DefaultEEGContext.userId,
+    me,
     users,
     status,
-  }), [join, connectionState, sendEEGData, toggleReady, progress, users, status]);
+  }), [join, connectionState, sendEEGData, toggleReady, progress, users, status, me]);
 
   return (
     <GameClientContext.Provider value={gameClient}>

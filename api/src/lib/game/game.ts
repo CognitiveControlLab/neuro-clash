@@ -1,9 +1,9 @@
+import { GAME_CYCLE, MAX_PLAYERS } from '../../dictionary/game';
 import DB from '../db';
-import User from '../User';
+import User from '../user';
+import type { UserState, Vector } from '../user/user';
 
 class Game {
-  public static readonly MAX_PLAYERS = 2;
-
   private id: string;
 
   private players: Map<string, User>;
@@ -17,6 +17,16 @@ class Game {
     this.players = new Map<string, User>();
     this.spectators = new Map<string, User>();
     this.status = 'waiting';
+
+    this.startGameLoop();
+  }
+
+  startGameLoop() {
+    setInterval(() => {
+      this.players.forEach((player) => {
+        player.produce();
+      });
+    }, GAME_CYCLE);
   }
 
   getId(): string {
@@ -44,7 +54,7 @@ class Game {
   }
 
   join(userId: string): void {
-    if (this.getPlayerCount() >= Game.MAX_PLAYERS && !this.spectators.has(userId)) {
+    if (this.getPlayerCount() >= MAX_PLAYERS && !this.spectators.has(userId)) {
       this.spectators.set(userId, new User(userId));
     } else if (!this.players.has(userId)) {
       this.players.set(userId, new User(userId));
@@ -72,24 +82,31 @@ class Game {
     }
   }
 
-  progress(userId: string, inputs: any): void {
-    if (this.players.has(userId) && inputs.data?.samples?.length && inputs.type === 'accelerometer') {
-      this.setCurrentScore(userId, inputs.data.samples[0]);
-    }
-  }
-
-  setCurrentScore(userId: string, score: number): void {
+  progress(userId: string, behaviors: Array<number>): void {
     if (this.players.has(userId)) {
-      this.players.get(userId)?.setScore(score);
+      // TODO : Pass the actual data
+      this.applyUserProgress(userId, [0, 0, 0, 0, 0]);
     }
   }
 
-  getScores(): Array<{ userId: string, score: number }> {
-    return Array.from(this.players, ([key, value]) => ({ userId: key, score: value.getScore() }));
+  applyUserProgress(userId: string, behaviors: Array<number>): void {
+    if (this.players.has(userId)) {
+      this.players.get(userId)?.setStateOfMind(behaviors);
+    }
+  }
+
+  movePlayerHead(userId: string, position: Vector): void {
+    if (this.players.has(userId)) {
+      this.players.get(userId)?.setHeadPosition(position);
+    }
+  }
+
+  getGameProgress(): Array<UserState> {
+    return Array.from(this.players, ([, value]) => (value.userState()));
   }
 
   isFull(): boolean {
-    return this.getPlayerCount() >= Game.MAX_PLAYERS;
+    return this.getPlayerCount() >= MAX_PLAYERS;
   }
 
   getUsersArray(): Array<{ id: string, ready: boolean }> {

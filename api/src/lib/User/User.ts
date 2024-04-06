@@ -1,22 +1,65 @@
+import { BEHAVIORS, MAX_BANK, MAX_PRODUCTION } from '../../dictionary/game';
+
+export interface Vector {
+  x: number;
+  y: number;
+  z: number;
+}
+
+export interface UserState {
+  id: string;
+  production: Array<{ behavior: string, value: number }>;
+  bank: Array<{ behavior: string, value: number }>;
+  headPosition: Vector;
+}
+
 class User {
   private id: string;
 
-  private score: number;
+  private bank: Array<number>;
+
+  // Production but change way faster
+  private stateOfMind: Array<number>;
+
+  private production: Array<number>;
 
   private ready: boolean;
 
+  private headPosition: Vector;
+
   constructor(id: string) {
     this.id = id;
-    this.score = 0;
     this.ready = false;
+    this.bank = new Array(BEHAVIORS.length).fill(0);
+    this.stateOfMind = new Array(BEHAVIORS.length).fill(0);
+    this.production = new Array(BEHAVIORS.length).fill(0);
+    this.headPosition = { x: 0, y: 0, z: 0 };
   }
 
-  public setScore(score: number): void {
-    this.score = score;
+  public setHeadPosition(position: Vector): void {
+    this.headPosition = position;
   }
 
-  public getScore(): number {
-    return this.score;
+  public setStateOfMind(stateOfMind: Array<number>): void {
+    // TODO: Change this production to be a number between 1 and 5
+    this.stateOfMind = stateOfMind.map(() => Math.floor(Math.random() * 5) + 1);
+  }
+
+  public produce(): void {
+    this.production = this.stateOfMind;
+    this.bank = this.bank.map((value, index) => {
+      const newAssetValue = this.production[index] + value;
+
+      if (newAssetValue < 0) {
+        return 0;
+      }
+
+      if (newAssetValue > MAX_BANK) {
+        return 100;
+      }
+
+      return newAssetValue;
+    });
   }
 
   public getId(): string {
@@ -29,6 +72,31 @@ class User {
 
   public isReady(): boolean {
     return this.ready;
+  }
+
+  public getBank(): Array<{ behavior: string, value: number }> {
+    return this.bank.map((value, index) => ({
+      behavior: BEHAVIORS[index],
+      value,
+      max: MAX_BANK,
+    }));
+  }
+
+  public getProduction(): Array<{ behavior: string, value: number }> {
+    return this.production.map((value, index) => ({
+      behavior: BEHAVIORS[index],
+      value,
+      max: MAX_PRODUCTION,
+    }));
+  }
+
+  public userState(): UserState {
+    return {
+      id: this.id,
+      production: this.getProduction(),
+      bank: this.getBank(),
+      headPosition: this.headPosition,
+    };
   }
 }
 
