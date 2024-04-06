@@ -141,7 +141,8 @@ function GameClientProvider({
     });
   }, [gameId]);
 
-  const me = useMemo(() => users.find((user) => user.id === userId), [users]);
+  const me = useMemo(() => users.find((user) => user.id === userId)
+  || { id: userId, ready: false }, [users]);
 
   const gameClient: GameClientContextProps = useMemo(() => ({
     connectionState,
