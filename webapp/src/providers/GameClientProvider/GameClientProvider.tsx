@@ -7,11 +7,11 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { EEGData } from '../EEGProvider/EEGProvider';
 import socket from './socket';
 import GameStatus from '../../types/GameStatus';
 import UserInfo from '../../types/UserInfo';
+import getOrCreateUserName from '../../lib/sleep/generateUsername';
 
 enum ConnectionState {
   DISCONNECTED,
@@ -37,7 +37,7 @@ type GameClientContextProps = {
   toggleReady: () => void;
 };
 
-const userId = `Player#${uuidv4().slice(0, 5)}`;
+const userId = getOrCreateUserName();
 
 const DefaultEEGContext: GameClientContextProps = {
   connectionState: ConnectionState.DISCONNECTED,
