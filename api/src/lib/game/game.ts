@@ -93,12 +93,6 @@ class Game {
   progress(userId: string, behaviors: Array<number>): void {
     if (this.players.has(userId)) {
       // TODO : Pass the actual data
-      this.applyUserProgress(userId, [0, 0, 0, 0, 0]);
-    }
-  }
-
-  applyUserProgress(userId: string, behaviors: Array<number>): void {
-    if (this.players.has(userId)) {
       this.players.get(userId)?.setStateOfMind(behaviors);
     }
   }

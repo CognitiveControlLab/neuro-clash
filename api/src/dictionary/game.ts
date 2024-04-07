@@ -4,6 +4,6 @@ export const BEHAVIORS = ['confuse', 'clarity', 'excitement', 'boredom', 'concen
 
 export const GAME_CYCLE = 3000;
 
-export const MAX_BANK = 100;
+export const MAX_BANK = 25;
 
 export const MAX_PRODUCTION = 5;

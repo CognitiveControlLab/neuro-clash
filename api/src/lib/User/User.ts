@@ -45,8 +45,7 @@ class User {
   }
 
   public setStateOfMind(stateOfMind: Array<number>): void {
-    // TODO: Change this production to be a number between 1 and 5
-    this.stateOfMind = stateOfMind.map(() => Math.floor(Math.random() * 5) + 1);
+    this.stateOfMind = stateOfMind;
   }
 
   public produce(): void {
@@ -105,7 +104,7 @@ class User {
   }
 
   public isWinner(): boolean {
-    this.winner = this.bank.every((value) => value === MAX_BANK);
+    this.winner = this.bank.some((value) => value === MAX_BANK);
     return this.winner;
   }
 }

@@ -9,7 +9,8 @@
     }
   },
   "home": {
-    "title": "Le jeu"
+    "title": "Le jeu",
+    "start": "Commencer"
   },
   "eegSetup": {    
     "noDeviceConnected": "Aucun appareil connecté",

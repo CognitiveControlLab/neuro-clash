@@ -9,7 +9,8 @@
     }
   },
   "home": {
-    "title": "The game"
+    "title": "The game",
+    "start": "Start"
   },
   "end_game": {
     "tie": "Tie",
