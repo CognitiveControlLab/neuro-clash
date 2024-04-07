@@ -3,7 +3,6 @@ import { GameStatus } from '../game/game';
 import type { Proxy } from './types';
 
 function handleEEGData(props : Proxy) {
-
   const { payload, proxySocket, io } = props;
   const { gameId, userId, data } = payload;
 
