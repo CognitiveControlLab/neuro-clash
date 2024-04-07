@@ -23,6 +23,12 @@
     "not_ready": "Pas prêt",
     "waiting_for_players": "En attente d'un joueur..."
   },
+  "end_game": {
+    "tie": "Égalité",
+    "lose": "Défaite",
+    "win": "Victoire",
+    "play_again": "Rejouer"
+  },
   "navigation": {
     "login": "Se connecter",
     "sing_up": "S'inscrire",

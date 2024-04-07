@@ -11,6 +11,7 @@ export interface UserState {
   production: Array<{ behavior: string, value: number }>;
   bank: Array<{ behavior: string, value: number }>;
   headPosition: Vector;
+  isWinner: boolean;
 }
 
 class User {
@@ -27,6 +28,8 @@ class User {
 
   private headPosition: Vector;
 
+  private winner: boolean;
+
   constructor(id: string) {
     this.id = id;
     this.ready = false;
@@ -34,6 +37,7 @@ class User {
     this.stateOfMind = new Array(BEHAVIORS.length).fill(0);
     this.production = new Array(BEHAVIORS.length).fill(0);
     this.headPosition = { x: 0, y: 0, z: 0 };
+    this.winner = false;
   }
 
   public setHeadPosition(position: Vector): void {
@@ -55,7 +59,7 @@ class User {
       }
 
       if (newAssetValue > MAX_BANK) {
-        return 100;
+        return MAX_BANK;
       }
 
       return newAssetValue;
@@ -96,7 +100,13 @@ class User {
       production: this.getProduction(),
       bank: this.getBank(),
       headPosition: this.headPosition,
+      isWinner: this.isWinner(),
     };
+  }
+
+  public isWinner(): boolean {
+    this.winner = this.bank.every((value) => value === MAX_BANK);
+    return this.winner;
   }
 }
 

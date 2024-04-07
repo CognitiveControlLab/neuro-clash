@@ -3,6 +3,12 @@ import DB from '../db';
 import User from '../user';
 import type { UserState, Vector } from '../user/user';
 
+export enum GameStatus {
+  WAITING = 'waiting',
+  STARTED = 'started',
+  FINISHED = 'finished',
+}
+
 class Game {
   private id: string;
 
@@ -10,19 +16,21 @@ class Game {
 
   private spectators: Map<string, User>;
 
-  private status: 'waiting' | 'started' | 'finished';
+  private status: GameStatus;
 
   constructor(id: string) {
     this.id = id;
     this.players = new Map<string, User>();
     this.spectators = new Map<string, User>();
-    this.status = 'waiting';
+    this.status = GameStatus.WAITING;
 
     this.startGameLoop();
   }
 
   startGameLoop() {
     setInterval(() => {
+      if (this.status !== GameStatus.STARTED) return;
+
       this.players.forEach((player) => {
         player.produce();
       });
@@ -78,7 +86,7 @@ class Game {
 
     // Update game status
     if (this.isFull() && this.getUsersArray().every((user) => user.ready)) {
-      this.status = 'started';
+      this.status = GameStatus.STARTED;
     }
   }
 
@@ -113,7 +121,12 @@ class Game {
     return Array.from(this.players, ([key, value]) => ({ id: key, ready: value.isReady() }));
   }
 
-  getStatus(): 'waiting' | 'started' | 'finished' {
+  getStatus(): GameStatus {
+    // TODO: Implement winning condition
+    const winners = Array.from(this.players.values()).filter((player) => player.isWinner());
+    if (winners.length > 0) {
+      this.status = GameStatus.FINISHED;
+    }
     return this.status;
   }
 }

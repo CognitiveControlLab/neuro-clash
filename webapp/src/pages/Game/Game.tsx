@@ -5,6 +5,7 @@ import { ConnectionState, useGameClient } from '../../providers/GameClientProvid
 import GameView from './GameView';
 import { Container } from './styles';
 import Lobby from './components/Lobby/Lobby';
+import EndGame from './components/EndGame/EndGame';
 
 function Game() {
   const { gameId } = useParams();
@@ -35,7 +36,7 @@ function Game() {
     <Container>
       { status === 'waiting' && <Lobby />}
       { status === 'started' && <GameView />}
-      { status === 'finished' && <h1>Game Over</h1>}
+      { status === 'finished' && <EndGame />}
     </Container>
   );
 }

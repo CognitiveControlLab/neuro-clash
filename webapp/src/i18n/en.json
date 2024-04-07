@@ -11,6 +11,12 @@
   "home": {
     "title": "The game"
   },
+  "end_game": {
+    "tie": "Tie",
+    "lose": "Defeat",
+    "win": "Victory",
+    "play_again": "Play again"
+  },
   "eegSetup": {
     "noDeviceConnected": "No device connected",
     "title": "EEG Setup",
