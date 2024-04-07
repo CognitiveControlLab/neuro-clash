@@ -1,7 +1,7 @@
 import { GAME_CYCLE, MAX_PLAYERS } from '../../dictionary/game';
 import DB from '../db';
-import User from '../user';
-import type { UserState, Vector } from '../user';
+import User from '../user-controller';
+import type { UserState, Vector } from '../user-controller';
 
 export enum GameStatus {
   WAITING = 'waiting',
