@@ -18,7 +18,7 @@ export const Progress = styled.div<{ color: String, progress: Number }>`
 
     div {
         background-color: ${(props) => props.color};
-        width: 40%;
+        width: ${(props) => `${props.progress.toString()}%`};
         height: 20px;
         border-radius: 10px;
     }
