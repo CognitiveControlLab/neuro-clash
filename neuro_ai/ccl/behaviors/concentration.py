@@ -34,6 +34,7 @@ class Concentration:
         mean_beta_power = beta_power.mean(axis=0)
 
         alpha_beta_ratio = mean_alpha_power / mean_beta_power
+        logger.info(f"Alpha Beta Ratio: {alpha_beta_ratio}")
 
         for level, threshold in reversed(self.concentration_levels_threshold.items()):
             if alpha_beta_ratio >= threshold:

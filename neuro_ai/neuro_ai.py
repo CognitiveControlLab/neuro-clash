@@ -87,12 +87,15 @@ async def eegData(sid, data: dict):
         data_processor.wave_data["psd_power"]["beta"][-1],
     )
 
-    if concentration_level.value >= 2:
-        logger.info(f"Concentration Level: {concentration_level.value}")
+    logger.info(f"Concentration Level: {concentration_level.value}")
 
     await sio.emit(
         "progress",
-        data={"concentration_level": concentration_level.value},
+        data={
+            "concentration_level": concentration_level.value,
+            "userId": data["userId"],
+            "gameId": data["gameId"],
+        },
         to=sid,
         namespace=namespace,
     )
