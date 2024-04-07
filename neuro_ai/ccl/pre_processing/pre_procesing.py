@@ -5,6 +5,8 @@ from ccl.models.eeg import EEGReading
 import mne
 from mne.io import RawArray
 
+mne.utils.set_log_level("ERROR")
+
 CH_NAMES = ["TP9", "AF7", "AF8", "TP10"]
 CH_TYPES = ["eeg"] * len(CH_NAMES)
 SAMPLING_RATE = 256
@@ -28,10 +30,20 @@ def setup_mne_data(input_data: List[EEGReading]) -> RawArray:
     return raw
 
 
-def ica(raw):
+def ica(raw: mne.io.RawArray):
     # Apply ICA for artifact removal
     ica = mne.preprocessing.ICA(n_components=4, random_state=0)
-    ica.fit(raw, verbose=False)
-    raw = ica.apply(raw, verbose=False)
-    raw_normalized = (raw - np.mean(raw)) / np.std(raw)
+    ica.fit(raw)
+    raw = ica.apply(raw)
+
+    # Normalize the data
+    scaler = mne.decoding.Scaler(scalings="mean")
+    raw_data = scaler.fit_transform(raw.get_data())
+
+    # Remove the last dimension
+    raw_data = np.squeeze(raw_data)
+
+    # Convert back to RawArray
+    raw_normalized = mne.io.RawArray(raw_data, raw.info)
+
     return raw_normalized

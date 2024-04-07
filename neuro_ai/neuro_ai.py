@@ -69,7 +69,7 @@ async def eegData(sid, data: dict):
     """
     # logger.info(f"Received data: {data}")
     input_data = InputData(**data)
-    if not input_data.data.type == "eeg":
+    if not input_data.data.type == "eeg" or input_data.data.type == "mock_eeg":
         # logger.error("Invalid data type")
         return
 
