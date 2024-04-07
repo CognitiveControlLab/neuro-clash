@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber';
+import { useMemo } from 'react';
 import { useGameClient } from '../../providers/GameClientProvider';
 import { Container, OverlayContainer, StatsOverlay } from './styles';
 import RadarChart from '../../components/RadarChart';
@@ -8,6 +9,14 @@ interface BoxProps {
   position: [number, number, number];
   rotation: [number, number, number];
 }
+
+const BehaviorColors = new Map([
+  ['confuse', 'grey'],
+  ['clarity', 'darkblue'],
+  ['excitement', 'darkgreen'],
+  ['boredom', 'brown'],
+  ['concentrated', 'orange'],
+]);
 
 function Box(props: BoxProps) {
   const { position, rotation } = props;
@@ -23,35 +32,35 @@ function Box(props: BoxProps) {
 function GameView() {
   const {
     progress,
+    me,
   } = useGameClient();
+
+  const myProgress = useMemo(() => progress?.find((p: any) => p.id === me?.id), [progress, me]);
+  const myBank = useMemo(() => myProgress?.bank.map(({ behavior, value, max } : any) => ({
+    color: BehaviorColors.get(behavior) || 'black',
+    max,
+    value,
+  })), [myProgress]);
+  const myProduction = myProgress?.production.map(({ behavior, value } : any) => ({
+    label: behavior,
+    value,
+  }));
 
   return (
     <Container>
       <Canvas shadows>
         <ambientLight intensity={0.5} />
-        { progress?.scores?.map(({ score }: any, index : number) => (
+        { progress?.map(({ headPosition }: any, index : number) => (
           <Box
             position={[-2 + (index * 4), 0, 0]}
-            rotation={[score.x, 0, score.y]}
+            rotation={[headPosition.x, 0, headPosition.y]}
           />
         ))}
       </Canvas>
       <OverlayContainer>
         <StatsOverlay>
-          {/* Use progress from the server */}
-          <RadarChart items={[
-            { label: 'Concentration', value: 1 },
-            { label: 'Alertness', value: 2 },
-            { label: 'Will', value: 3 },
-          ]}
-          />
-          {/* Use progress from the server */}
-          <BankChart items={[
-            { color: 'red', max: 100, value: 50 },
-            { color: 'blue', max: 100, value: 20 },
-            { color: 'yellow', max: 100, value: 20 },
-          ]}
-          />
+          <RadarChart items={myProduction} maxValue={myProduction?.at(0)?.max || 5} />
+          <BankChart items={myBank} />
         </StatsOverlay>
       </OverlayContainer>
     </Container>

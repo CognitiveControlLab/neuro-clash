@@ -1,3 +1,5 @@
-import User from './User';
+import User from './user';
+import type { UserState, Vector } from './user';
 
-export default User;
+export type { UserState, Vector };
+export { User };

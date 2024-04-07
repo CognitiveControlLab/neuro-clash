@@ -11,7 +11,7 @@ interface UserBarOverlayProps {
 
 function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
   const { children } = props;
-  const { userId } = useGameClient();
+  const { me } = useGameClient();
 
   const [eegSetupOpen, setEEGSetupOpen] = useState(false);
 
@@ -22,6 +22,8 @@ function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
   const onEEGSetupOpen = () => {
     setEEGSetupOpen(true);
   };
+
+  const userId = me?.id;
 
   return (
     <div>

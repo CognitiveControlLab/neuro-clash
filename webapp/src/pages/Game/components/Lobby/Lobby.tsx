@@ -12,12 +12,10 @@ function Lobby() {
   const {
     users,
     toggleReady,
-    userId,
+    me,
   } = useGameClient();
 
   const { deviceInfo } = useEEG();
-
-  const me = users.find((user : UserInfo) => user.id === userId);
 
   const [eegSetupOpen, setEEGSetupOpen] = useState(false);
 

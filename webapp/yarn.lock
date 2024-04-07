@@ -2706,6 +2706,11 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
+friendly-username-generator@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/friendly-username-generator/-/friendly-username-generator-2.0.4.tgz#67778be83a9879b935be224f948ac933d5ad7b94"
+  integrity sha512-718y2+j8A28eEsR3AOK4Tp0U/69svwnE6CMtXAvleXHubDim/CsOc2EU4MGBkShB1WzMTO4iO/10JrKaiCc2Sw==
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
@@ -3237,6 +3242,11 @@ its-fine@^1.0.6:
   integrity sha512-v1Ia1xl20KbuSGlwoaGsW0oxsw8Be+TrXweidxD9oT/1lAh6O3K3/GIM95Tt6WCiv6W+h2M7RB1TwdoAjQyyKw==
   dependencies:
     "@types/react-reconciler" "^0.28.0"
+
+jotai@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.7.2.tgz#bfc49d76a93831f8e6b21e46662c3de7f15ae3d9"
+  integrity sha512-6Ft5kpNu8p93Ssf1Faoza3hYQZRIYp7rioK8MwTTFnbQKwUyZElwquPwl1h6U0uo9hC0jr+ghO3gcSjc6P35/Q==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
