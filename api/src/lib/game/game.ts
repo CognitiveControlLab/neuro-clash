@@ -1,6 +1,6 @@
 import { GAME_CYCLE, MAX_PLAYERS } from '../../dictionary/game';
 import DB from '../db';
-import type User from '../user/user';
+import User from '../user/user';
 import type { UserState, Vector } from '../user/user';
 
 export enum GameStatus {
