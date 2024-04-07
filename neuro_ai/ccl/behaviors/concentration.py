@@ -35,11 +35,7 @@ class Concentration:
 
         alpha_beta_ratio = mean_alpha_power / mean_beta_power
 
-        # Determine the concentration level based on the alpha_beta_ratio threshold
-        concentration_thresholds = list(self.concentration_levels_threshold.values())
-        concentration_levels = list(self.concentration_levels_threshold.keys())
-        concentration_level = concentration_levels[
-            np.argmax(alpha_beta_ratio >= np.array(concentration_thresholds))
-        ]
-
-        return concentration_level
+        for level, threshold in reversed(self.concentration_levels_threshold.items()):
+            if alpha_beta_ratio >= threshold:
+                return level
+        return ConcentrationLevel.NONE

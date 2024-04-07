@@ -22,7 +22,7 @@ namespace = "/eeg"
 # Create the behaviors objects
 concentration = Concentration()
 
-#TODO: Create data object
+# TODO: Create data object
 data_processor = DataProcessig()
 
 
@@ -73,20 +73,22 @@ async def eegData(sid, data: dict):
         # logger.error("Invalid data type")
         return
 
-
-    #TODO: Trasform to nme data
+    # TODO: Trasform to nme data
     mne_raw = setup_mne_data(input_data.data.data)
 
-    #TODO: Calculate and keep psd
+    # TODO: Calculate and keep psd
     data_processor.process_psd_data(mne_raw)
 
     # concentration
-    #TODO: adjust to take new data format waves
-    #processed_data = concentration.pre_process_data(mne_raw)  # DATAAAAAAAA
-    concentration_level = concentration.concentration_level(data_processor.wave_data["psd_power"]["alpha"][-1:],
-                                                            data_processor.wave_data["psd_power"]["beta"][-1:])
+    # TODO: adjust to take new data format waves
+    # processed_data = concentration.pre_process_data(mne_raw)  # DATAAAAAAAA
+    concentration_level = concentration.concentration_level(
+        data_processor.wave_data["psd_power"]["alpha"][-1],
+        data_processor.wave_data["psd_power"]["beta"][-1],
+    )
 
-    logger.info(f"Concentration Level: {concentration_level.value}")
+    if concentration_level.value >= 2:
+        logger.info(f"Concentration Level: {concentration_level.value}")
 
     await sio.emit(
         "progress",
@@ -97,14 +99,15 @@ async def eegData(sid, data: dict):
 
 
 if __name__ == "__main__":
-    #TODO: Setup api or not
+    # TODO: Setup api or not
     run_api = True
     if len(sys.argv) > 1:
         run_api = sys.argv[1]
 
     if run_api:
         import uvicorn
+
         uvicorn.run(app, host="0.0.0.0", port=9090)
     else:
-        #TODO: Adjust to be able to run without the API
+        # TODO: Adjust to be able to run without the API
         print("Comming soon")
