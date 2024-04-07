@@ -26,23 +26,12 @@ class Concentration:
             ConcentrationLevel.REALLY_HIGH: 4,
         }
 
-    def pre_process_data(self, raw: List[EEGReading]):
-        mne_raw = setup_mne_data(raw)
+    def pre_process_data(self, mne_raw):
         mne_raw.filter(4, 40, method="iir")
         # data = ica(mne_raw)
         return mne_raw
 
-    def concentration_level(self, mne_raw) -> ConcentrationLevel:
-        psds, freqs = mne.time_frequency.psd_array_welch(
-            mne_raw.get_data(), sfreq=256, fmin=4, fmax=30, n_per_seg=256
-        )
-
-        alpha_indices = np.where((freqs >= 8) & (freqs <= 12))[0]
-        beta_indices = np.where((freqs >= 13) & (freqs <= 30))[0]
-
-        alpha_power = psds[:, alpha_indices].mean(axis=1)
-        beta_power = psds[:, beta_indices].mean(axis=1)
-
+    def concentration_level(self, alpha_power, beta_power) -> ConcentrationLevel:
         # Calculate the average power across all channels for each epoch
         mean_alpha_power = alpha_power.mean(axis=0)
         mean_beta_power = beta_power.mean(axis=0)
