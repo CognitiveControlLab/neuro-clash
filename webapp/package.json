@@ -26,6 +26,8 @@
     "@react-three/drei": "^9.102.6",
     "@react-three/fiber": "^8.15.19",
     "chart.js": "^4.4.2",
+    "friendly-username-generator": "^2.0.4",
+    "jotai": "^2.7.2",
     "leva": "^0.9.35",
     "muse-js": "3.3.0",
     "postcss-syntax": "0.36.2",

@@ -1,22 +1,40 @@
+import { GAME_CYCLE, MAX_PLAYERS } from '../../dictionary/game';
 import DB from '../db';
-import User from '../User';
+import { User } from '../user';
+import type { UserState, Vector } from '../user/user';
+
+export enum GameStatus {
+  WAITING = 'waiting',
+  STARTED = 'started',
+  FINISHED = 'finished',
+}
 
 class Game {
-  public static readonly MAX_PLAYERS = 2;
-
   private id: string;
 
   private players: Map<string, User>;
 
   private spectators: Map<string, User>;
 
-  private status: 'waiting' | 'started' | 'finished';
+  private status: GameStatus;
 
   constructor(id: string) {
     this.id = id;
     this.players = new Map<string, User>();
     this.spectators = new Map<string, User>();
-    this.status = 'waiting';
+    this.status = GameStatus.WAITING;
+
+    this.startGameLoop();
+  }
+
+  startGameLoop() {
+    setInterval(() => {
+      if (this.status !== GameStatus.STARTED) return;
+
+      this.players.forEach((player) => {
+        player.produce();
+      });
+    }, GAME_CYCLE);
   }
 
   getId(): string {
@@ -44,7 +62,7 @@ class Game {
   }
 
   join(userId: string): void {
-    if (this.getPlayerCount() >= Game.MAX_PLAYERS && !this.spectators.has(userId)) {
+    if (this.getPlayerCount() >= MAX_PLAYERS && !this.spectators.has(userId)) {
       this.spectators.set(userId, new User(userId));
     } else if (!this.players.has(userId)) {
       this.players.set(userId, new User(userId));
@@ -68,35 +86,41 @@ class Game {
 
     // Update game status
     if (this.isFull() && this.getUsersArray().every((user) => user.ready)) {
-      this.status = 'started';
+      this.status = GameStatus.STARTED;
     }
   }
 
-  progress(userId: string, inputs: any): void {
-    if (this.players.has(userId) && inputs.data?.samples?.length && inputs.type === 'accelerometer') {
-      this.setCurrentScore(userId, inputs.data.samples[0]);
-    }
-  }
-
-  setCurrentScore(userId: string, score: number): void {
+  progress(userId: string, behaviors: Array<number>): void {
     if (this.players.has(userId)) {
-      this.players.get(userId)?.setScore(score);
+      // TODO : Pass the actual data
+      this.players.get(userId)?.setStateOfMind(behaviors);
     }
   }
 
-  getScores(): Array<{ userId: string, score: number }> {
-    return Array.from(this.players, ([key, value]) => ({ userId: key, score: value.getScore() }));
+  movePlayerHead(userId: string, position: Vector): void {
+    if (this.players.has(userId)) {
+      this.players.get(userId)?.setHeadPosition(position);
+    }
+  }
+
+  getGameProgress(): Array<UserState> {
+    return Array.from(this.players, ([, value]) => (value.userState()));
   }
 
   isFull(): boolean {
-    return this.getPlayerCount() >= Game.MAX_PLAYERS;
+    return this.getPlayerCount() >= MAX_PLAYERS;
   }
 
   getUsersArray(): Array<{ id: string, ready: boolean }> {
     return Array.from(this.players, ([key, value]) => ({ id: key, ready: value.isReady() }));
   }
 
-  getStatus(): 'waiting' | 'started' | 'finished' {
+  getStatus(): GameStatus {
+    // TODO: Implement winning condition
+    const winners = Array.from(this.players.values()).filter((player) => player.isWinner());
+    if (winners.length > 0) {
+      this.status = GameStatus.FINISHED;
+    }
     return this.status;
   }
 }

@@ -9,7 +9,8 @@
     }
   },
   "home": {
-    "title": "Le jeu"
+    "title": "Le jeu",
+    "start": "Commencer"
   },
   "eegSetup": {    
     "noDeviceConnected": "Aucun appareil connecté",
@@ -22,6 +23,12 @@
     "ready": "Prêt",
     "not_ready": "Pas prêt",
     "waiting_for_players": "En attente d'un joueur..."
+  },
+  "end_game": {
+    "tie": "Égalité",
+    "lose": "Défaite",
+    "win": "Victoire",
+    "play_again": "Rejouer"
   },
   "navigation": {
     "login": "Se connecter",

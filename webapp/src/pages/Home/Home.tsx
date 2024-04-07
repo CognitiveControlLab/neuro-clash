@@ -15,7 +15,7 @@ function Home() {
     <Container>
       <Button onClick={onGameStart}>
         <h1>
-          <FormattedMessage id="start" />
+          <FormattedMessage id="home.start" />
         </h1>
       </Button>
     </Container>

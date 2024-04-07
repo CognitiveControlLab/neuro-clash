@@ -2,21 +2,17 @@ import Game from '../game';
 import type { Route } from './types';
 
 function handleProgress(props: Route) {
-  const { payload, socket } = props;
+  const { payload } = props;
 
   if (!payload.gameId || !payload.userId || !payload.data) {
     return;
   }
 
-  const { gameId, userId, data } = payload;
+  const { gameId, userId } = payload;
 
   const gameInstance = Game.getOrCreate(gameId);
 
-  gameInstance.progress(userId, data);
-
-  const scores = gameInstance.getScores();
-
-  socket.to(gameId).emit('progress', { scores });
+  gameInstance.progress(userId, [1, 1, 1, 1, Math.floor(Math.random() * 5) + 1]);
 }
 
 export default handleProgress;
