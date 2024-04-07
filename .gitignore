@@ -222,3 +222,4 @@ dist
 .vscode*
 
 *__pycache__*
+*.cpython-311.pyc*

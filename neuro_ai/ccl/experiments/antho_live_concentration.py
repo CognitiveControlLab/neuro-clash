@@ -2,7 +2,6 @@ import logging
 
 import numpy as np
 import pyqtgraph as pg
-
 from pyqtgraph.Qt import QtCore, QtWidgets
 import mne
 
@@ -68,19 +67,30 @@ class Graph:
 
         return raw
 
-    def filter_data(self, raw):
+    def filter_data(self, raw: mne.io.RawArray):
         # Apply band-pass filter
         raw.filter(4, 40, method="iir")
         # Apply ICA for artifact removal
         ica = mne.preprocessing.ICA(n_components=4, random_state=0)
         ica.fit(raw)
         raw = ica.apply(raw)
-        raw_normalized = (raw - np.mean(raw)) / np.std(raw)
-        return raw_normalized
+
+        # Normalize the data
+        scaler = mne.decoding.Scaler(scalings="mean")
+        raw_data = scaler.fit_transform(raw.get_data())
+
+        # Remove the last dimension
+        raw_data = np.squeeze(raw_data)
+
+        # Convert back to RawArray
+        raw = mne.io.RawArray(raw_data, raw.info)
+
+        return raw
 
     def data_processing(self):
         data = self.board_shim.get_current_board_data(50)
         raw = self.setup_mne_data(data)
+        raw = self.filter_data(raw)
         # raw_data = self.get_data()
 
         psds, freqs = mne.time_frequency.psd_array_welch(

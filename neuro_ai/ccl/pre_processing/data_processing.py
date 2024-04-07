@@ -1,6 +1,7 @@
 import numpy as np
 import mne
 
+
 class DataProcessig:
     def __init__(self):
 
@@ -31,9 +32,9 @@ class DataProcessig:
             -self.len_wave_hist :
         ]
 
-    def process_psd_data(self, mne_raw):
+    def process_psd_data(self, mne_raw: mne.io.RawArray):
         psds, freqs = mne.time_frequency.psd_array_welch(
-            mne_raw.get_data(), sfreq=256, fmin=1, fmax=30, n_per_seg=256
+            mne_raw.get_data(), sfreq=256, fmin=1, fmax=40, n_per_seg=256
         )
 
         # Find indices for alpha and beta bands
@@ -49,6 +50,4 @@ class DataProcessig:
         gamma_power = psds[:, gamma_indices].mean(axis=1)
 
         # Append the psd_power
-        self.append_psd_power(
-            alpha_power, beta_power, theta_power, gamma_power
-        )
+        self.append_psd_power(alpha_power, beta_power, theta_power, gamma_power)

@@ -6,9 +6,9 @@ format:
 
 # Initial setup needed for the project
 initial-setup:
-	make install-poetry
 	make install-pyenv
 	make install-python
+	make install-poetry
 
 install-poetry:
 	pip install poetry

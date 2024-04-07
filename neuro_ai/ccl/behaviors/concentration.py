@@ -1,11 +1,8 @@
 import numpy as np
 from loguru import logger
-from typing import List
-from ccl.pre_processing.pre_procesing import ica, setup_mne_data
-from ccl.models.eeg import EEGReading
+from ccl.pre_processing.pre_procesing import ica
 
 from enum import Enum
-import mne
 
 
 class ConcentrationLevel(Enum):
@@ -28,8 +25,8 @@ class Concentration:
 
     def pre_process_data(self, mne_raw):
         mne_raw.filter(4, 40, method="iir")
-        # data = ica(mne_raw)
-        return mne_raw
+        data = ica(mne_raw)
+        return data
 
     def concentration_level(self, alpha_power, beta_power) -> ConcentrationLevel:
         # Calculate the average power across all channels for each epoch
@@ -38,11 +35,7 @@ class Concentration:
 
         alpha_beta_ratio = mean_alpha_power / mean_beta_power
 
-        # Determine the concentration level based on the alpha_beta_ratio threshold
-        concentration_thresholds = list(self.concentration_levels_threshold.values())
-        concentration_levels = list(self.concentration_levels_threshold.keys())
-        concentration_level = concentration_levels[
-            np.argmax(alpha_beta_ratio >= np.array(concentration_thresholds))
-        ]
-
-        return concentration_level
+        for level, threshold in reversed(self.concentration_levels_threshold.items()):
+            if alpha_beta_ratio >= threshold:
+                return level
+        return ConcentrationLevel.NONE
