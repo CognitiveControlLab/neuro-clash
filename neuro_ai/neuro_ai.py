@@ -3,9 +3,8 @@ import socketio
 from loguru import logger
 from ccl.behaviors.concentration import Concentration
 from ccl.models.eeg import InputData
-from ccl.pre_processing.data_processing import DataProcessig
-from ccl.pre_processing.pre_procesing import setup_mne_data
-import sys
+from ccl.processing.data_processing import DataProcessing
+from ccl.processing.pre_procesing import setup_mne_data
 
 # Create a FastAPI app
 app = FastAPI()
@@ -23,7 +22,7 @@ namespace = "/eeg"
 concentration = Concentration()
 
 # TODO: Create data object
-data_processor = DataProcessig()
+data_processor = DataProcessing()
 
 
 @sio.event(namespace=namespace)
@@ -70,7 +69,7 @@ async def eegData(sid, data: dict):
     # logger.info(f"Received data: {data}")
     input_data = InputData(**data)
     if not input_data.data.type == "eeg" or input_data.data.type == "mock_eeg":
-        # logger.error("Invalid data type")
+        logger.error("Invalid data type")
         return
 
     # TODO: Trasform to nme data
@@ -102,15 +101,6 @@ async def eegData(sid, data: dict):
 
 
 if __name__ == "__main__":
-    # TODO: Setup api or not
-    run_api = True
-    if len(sys.argv) > 1:
-        run_api = sys.argv[1]
+    import uvicorn
 
-    if run_api:
-        import uvicorn
-
-        uvicorn.run(app, host="0.0.0.0", port=9090)
-    else:
-        # TODO: Adjust to be able to run without the API
-        print("Comming soon")
+    uvicorn.run(app, host="0.0.0.0", port=9090)

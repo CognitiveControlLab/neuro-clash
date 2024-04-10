@@ -1,6 +1,5 @@
-import numpy as np
 from loguru import logger
-from ccl.pre_processing.pre_procesing import ica
+from ccl.processing.pre_procesing import ica
 
 from enum import Enum
 

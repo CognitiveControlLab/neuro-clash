@@ -1,23 +1,31 @@
+from typing import List
 import pyqtgraph as pg
 from brainflow.board_shim import BoardShim
 from pyqtgraph.Qt import QtWidgets
 
 
 class GraphManager:
-    def __init__(self, board_shim):
+    def __init__(self, board_shim: BoardShim):
         self.update_speed_ms = 50
         self.window_size = 4
         self.board_shim = board_shim
         self.size = (800, 600)
         self.graphs = {}
 
-    def add_graph(self, chanels, title, overlap_plot=False):
+    def add_graph(self, chanels: List[str], title: str, overlap_plot: bool = False):
         newGraph = Graph(self.board_shim, chanels, title, self.size, overlap_plot)
         self.graphs[title] = newGraph
 
 
 class Graph:
-    def __init__(self, board_shim, chanel_names, title, size, overlap_plot):
+    def __init__(
+        self,
+        board_shim: BoardShim,
+        chanel_names: List[str],
+        title: str,
+        size: tuple[int, int],
+        overlap_plot: bool,
+    ):
 
         self.board_id = board_shim.get_board_id()
         self.board_shim = board_shim

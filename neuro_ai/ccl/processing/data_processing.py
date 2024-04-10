@@ -2,7 +2,7 @@ import numpy as np
 import mne
 
 
-class DataProcessig:
+class DataProcessing:
     def __init__(self):
 
         # add wave data

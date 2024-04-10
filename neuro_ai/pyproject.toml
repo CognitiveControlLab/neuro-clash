@@ -31,7 +31,7 @@ brainflow = "^5.12.0"
 flake8-pyproject = "^1.2.3"
 
 [flake8]
-ignore = "E501"
+ignore = "E501, E203"
 max-line-length = 120
 extend-ignore = "E203"
 
