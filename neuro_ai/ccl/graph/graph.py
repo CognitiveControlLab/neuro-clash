@@ -12,8 +12,8 @@ class GraphManager:
         self.size = (800, 600)
         self.graphs = {}
 
-    def add_graph(self, chanels: List[str], title: str, overlap_plot: bool = False):
-        newGraph = Graph(self.board_shim, chanels, title, self.size, overlap_plot)
+    def add_graph(self, waves: List[str], title: str, overlap_plot: bool = False):
+        newGraph = Graph(self.board_shim, waves, title, self.size, overlap_plot)
         self.graphs[title] = newGraph
 
 
@@ -21,7 +21,7 @@ class Graph:
     def __init__(
         self,
         board_shim: BoardShim,
-        chanel_names: List[str],
+        wave_names: List[str],
         title: str,
         size: tuple[int, int],
         overlap_plot: bool,
@@ -29,9 +29,8 @@ class Graph:
 
         self.board_id = board_shim.get_board_id()
         self.board_shim = board_shim
-        self.exg_channels = chanel_names  # Get wanted chanel
-        self.exg_channels_names = chanel_names
-        self.chanel_color = ["r", "b", "g", "w", "y", "p"]  # add colour
+        self.wave_names = wave_names
+        self.wave_color = ["r", "b", "g", "w", "y", "p"]  # add colour
         self.sampling_rate = BoardShim.get_sampling_rate(self.board_id)
         self.overlap_plot = overlap_plot
         self.app = QtWidgets.QApplication([])
@@ -43,27 +42,28 @@ class Graph:
     def _init_timeseries(self):
         self.plots = list()
         self.curves = list()
-        for i in range(len(self.exg_channels)):
-            if self.overlap_plot:
-                p = self.win.addPlot(row=0, col=0)
-            else:
-                p = self.win.addPlot(row=i, col=0)
-            p.addLegend()
-            p.showAxis("left", True)
-            p.setMenuEnabled("left", False)
-            p.showAxis("bottom", True)
-            p.setMenuEnabled("bottom", False)
-            p.setYRange(0, 1000, padding=0)
-            # p.setYRange(1, 20, padding=0)
+        # Removed the multiple plot options for simplicity
+        # TODO: Add back multiple plot if necessary
+        p = self.win.addPlot(row=0, col=0)
 
-            self.plots.append(p)
-            curve = p.plot(pen=self.chanel_color[i], name=self.exg_channels_names[i])
-            self.curves.append(curve)
+        p.addLegend()
+        p.showAxis("left")
+        p.setMenuEnabled("left")
+        p.showAxis("bottom")
+        p.setMenuEnabled("bottom")
+        p.setTitle("TimeSeries Plot")
+
+        self.plots.append(p)
+        self.curves.extend(
+            [
+                p.plot(pen=self.wave_color[i], name=self.wave_names[i])
+                for i in range(len(self.wave_names))
+            ]
+        )
 
     def update(self, data):
-        # data = self.board_shim.get_current_board_data(self.num_points)
-        for i, channel in enumerate(self.exg_channels_names):
+        for i in range(len(self.wave_names)):
             # plot timeseries
-            self.curves[i].setData(data[i])
+            self.curves[i].setData(data[i][-50:])
 
         self.app.processEvents()

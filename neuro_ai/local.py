@@ -36,10 +36,10 @@ def process_data(board_shim: BoardShim, graphs: list[Graph] = None):
 
     dp.process_psd_data(raw)
 
-    graphs.graphs["Test1"].update(
+    graphs.graphs["concentration"].update(
         [
-            dp.wave_data["psd_power"]["alpha"][-1].mean(axis=0),
-            dp.wave_data["psd_power"]["beta"][-1].mean(axis=0),
+            dp.wave_data["psd_power_avg"]["alpha"],
+            dp.wave_data["psd_power_avg"]["beta"],
         ]
     )
 
@@ -58,8 +58,9 @@ if __name__ == "__main__":
         board_shim.prepare_session()
         board_shim.start_stream(450000)
 
-        graphs.add_graph(["Alpha", "Beta"], "Test1")
-        # graphs.add_graph(["Alpha", "Beta"], "Test2")
+        graphs.add_graph(
+            waves=["Alpha", "Beta"], title="concentration", overlap_plot=True
+        )
 
         # Init the timer
         timer = QtCore.QTimer()
@@ -68,8 +69,8 @@ if __name__ == "__main__":
 
         QtWidgets.QApplication.instance().exec_()
 
-    except BaseException:
-        logger.warning("Exception", exc_info=True)
+    except BaseException as e:
+        logger.warning(f"Exception: {e}", exc_info=True)
     finally:
         logger.info("End")
         if board_shim.is_prepared():
