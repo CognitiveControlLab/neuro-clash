@@ -3,8 +3,7 @@ import type { Route } from './types';
 
 function handleProgress(props: Route) {
   const { payload } = props;
-  
-  console.log(payload)
+
   if (!payload.gameId || !payload.userId || payload.concentration_level == null) {
     return;
   }
