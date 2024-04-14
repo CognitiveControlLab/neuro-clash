@@ -80,7 +80,7 @@ function EEGProvider({
 
       setInterval(() => {
         eegListener({
-          type: EEGDataType.MOCK_EEG,
+          type: EEGDataType.EEG,
           data: [{
             electrode: 0,
             index: 1589,

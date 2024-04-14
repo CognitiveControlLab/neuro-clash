@@ -18,9 +18,6 @@ function ProgressBar(props : ProgressBarProps) {
       <Progress team1={team1} team2={team2} progress={progress}>
         <div />
       </Progress>
-      {value}
-      /
-      {max}
     </Row>
 
   );

@@ -25,8 +25,6 @@ function GameView() {
     progress,
   } = useGameClient();
 
-  console.log('progress', progress);
-
   const scores = useMemo(() => progress?.map((p: any, index: number) => ({
     color: index === 0 ? 'red' : 'blue',
     max: p.bank[0].max,
@@ -43,6 +41,10 @@ function GameView() {
             rotation={[headPosition.x, 0, headPosition.y]}
           />
         ))}
+        <Box
+          position={[0, 0, 0]}
+          rotation={[0, 0, 0]}
+        />
       </Canvas>
       <OverlayContainer>
         <StatsOverlay>

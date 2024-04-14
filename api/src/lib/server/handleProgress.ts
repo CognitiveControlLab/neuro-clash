@@ -12,7 +12,10 @@ function handleProgress(props: Route) {
 
   const gameInstance = Game.getOrCreate(gameId);
 
-  gameInstance.progress(userId, [payload.concentration_level]);
+  // Random number between 0 and 5
+  const random = Math.floor(Math.random() * 6);
+
+  gameInstance.progress(userId, [payload.concentration_level + random]);
 }
 
 export default handleProgress;

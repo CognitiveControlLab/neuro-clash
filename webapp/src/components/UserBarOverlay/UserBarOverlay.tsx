@@ -1,8 +1,10 @@
 import { ReactNode, useState } from 'react';
 import { IconButton } from '@mui/material';
-import { Settings } from '@mui/icons-material';
+import { Settings, GitHub } from '@mui/icons-material';
 import EEGSetup from '../EEGSetup';
-import { Bar, Overlay, Row } from './styles';
+import {
+  Bar, GitLink, LinkWrapper, Overlay, Row,
+} from './styles';
 import { useGameClient } from '../../providers/GameClientProvider';
 
 interface UserBarOverlayProps {
@@ -36,6 +38,16 @@ function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
               <Settings />
             </IconButton>
           </Bar>
+        </Row>
+        <Row>
+          <LinkWrapper>
+            <GitLink href="https://github.com/CognitiveControlLab/neuro-clash">
+              <GitHub fontSize="small" />
+            </GitLink>
+            <GitLink href="https://github.com/CognitiveControlLab/neuro-clash">
+              CognitiveControlLab/neuro-clash
+            </GitLink>
+          </LinkWrapper>
         </Row>
       </Overlay>
       {children}

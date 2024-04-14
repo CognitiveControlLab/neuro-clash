@@ -4,6 +4,6 @@ export const BEHAVIORS = ['concentrated'];
 
 export const GAME_CYCLE = 100;
 
-export const MAX_BANK = 100;
+export const MAX_BANK = 40;
 
 export const MAX_PRODUCTION = 5;

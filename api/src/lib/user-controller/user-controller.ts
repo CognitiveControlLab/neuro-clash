@@ -48,10 +48,14 @@ class User {
     this.stateOfMind = stateOfMind;
   }
 
-  public produce(): void {
+  public produce(): Array<number> {
     this.production = this.stateOfMind;
+    return this.production;
+  }
+
+  public updateBank(production: Array<number>): void {
     this.bank = this.bank.map((value, index) => {
-      const newAssetValue = this.production[index] + value;
+      const newAssetValue = production[index] + value;
 
       if (newAssetValue < 0) {
         return 0;
