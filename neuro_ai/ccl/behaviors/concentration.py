@@ -6,10 +6,10 @@ from enum import Enum
 
 class ConcentrationLevel(Enum):
     NONE = 0
-    LOW = 1
-    MEDIUM = 2
-    HIGH = 3
-    REALLY_HIGH = 4
+    LOW = 0
+    MEDIUM = 1
+    HIGH = 2
+    REALLY_HIGH = 3
 
 
 class Concentration:
@@ -27,15 +27,14 @@ class Concentration:
         data = ica(mne_raw)
         return data
 
-    def concentration_level(self, alpha_power, beta_power) -> ConcentrationLevel:
-        # Calculate the average power across all channels for each epoch
-        mean_alpha_power = alpha_power.mean(axis=0)
-        mean_beta_power = beta_power.mean(axis=0)
+    def concentration_level(
+        self, mean_alpha_power, mean_beta_power
+    ) -> ConcentrationLevel:
 
-        alpha_beta_ratio = mean_alpha_power / mean_beta_power
-        logger.info(f"Alpha Beta Ratio: {alpha_beta_ratio}")
+        beta_alpha_ratio = mean_beta_power / mean_alpha_power
+        logger.info(f"Beta Alpha Ratio: {beta_alpha_ratio}")
 
         for level, threshold in reversed(self.concentration_levels_threshold.items()):
-            if alpha_beta_ratio >= threshold:
+            if beta_alpha_ratio >= threshold:
                 return level
         return ConcentrationLevel.NONE

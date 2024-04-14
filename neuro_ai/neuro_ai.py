@@ -37,53 +37,22 @@ async def disconnect(sid):
 
 @sio.event(namespace=namespace)
 async def eegData(sid, data: dict):
-    """Structure of the data:
-    {
-        "data": {
-            "type": "eeg",
-            "data": [
-                {
-                    "electrode": 0,
-                    "index": 2299,
-                    "samples": [
-                        47.36328125,
-                        -178.7109375,
-                        -0.9765625,
-                        66.40625,
-                        59.5703125,
-                        -150.87890625,
-                        -264.6484375,
-                        -88.8671875,
-                        -236.328125,
-                        -729.4921875,
-                        -186.03515625,
-                        -187.5
-                    ],
-                    "timestamp": 1712191481299.75
-                },...
-            ]
-        },
-        "userId": "Player#8c98b",
-        "gameId": "f6d47778-e3e4-4230-b854-85b0ad20b7a6"
-    """
-    # logger.info(f"Received data: {data}")
     input_data = InputData(**data)
-    if not input_data.data.type == "eeg" or input_data.data.type == "mock_eeg":
-        logger.error("Invalid data type")
+    if not input_data.data.type == "eeg":
+        logger.error(f"Invalid data type: {input_data.data.type}")
         return
 
-    # TODO: Trasform to nme data
     mne_raw = setup_mne_data(input_data.data.data)
 
-    # TODO: Calculate and keep psd
-    data_processor.process_psd_data(mne_raw)
+    processed_data = concentration.pre_process_data(mne_raw)
+
+    data_processor.process_psd_data(processed_data)
 
     # concentration
-    # TODO: adjust to take new data format waves
-    # processed_data = concentration.pre_process_data(mne_raw)  # DATAAAAAAAA
+
     concentration_level = concentration.concentration_level(
-        data_processor.wave_data["psd_power"]["alpha"][-1],
-        data_processor.wave_data["psd_power"]["beta"][-1],
+        data_processor.wave_data["psd_power_avg"]["alpha"][-1],
+        data_processor.wave_data["psd_power_avg"]["beta"][-1],
     )
 
     logger.info(f"Concentration Level: {concentration_level.value}")
