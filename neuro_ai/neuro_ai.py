@@ -6,7 +6,6 @@ from ccl.models.eeg import InputData
 from ccl.processing.data_processing import DataProcessing
 from ccl.processing.pre_procesing import setup_mne_data
 
-# Create a FastAPI app
 app = FastAPI()
 
 # Create a Socket.IO asynchronous server
@@ -15,13 +14,10 @@ sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 # Wrap FastAPI app with Socket.IO application
 app = socketio.ASGIApp(sio, app)
 
-# Example namespace
 namespace = "/eeg"
 
-# Create the behaviors objects
 concentration = Concentration()
 
-# TODO: Create data object
 data_processor = DataProcessing()
 
 
@@ -48,19 +44,18 @@ async def eegData(sid, data: dict):
 
     data_processor.process_psd_data(processed_data)
 
-    # concentration
-
+    # Concentration detection
     concentration_level = concentration.concentration_level(
         data_processor.wave_data["psd_power_avg"]["alpha"][-1],
         data_processor.wave_data["psd_power_avg"]["beta"][-1],
     )
 
-    logger.info(f"Concentration Level: {concentration_level.value}")
+    logger.info(f"Concentration Level: {concentration_level}")
 
     await sio.emit(
         "progress",
         data={
-            "concentration_level": concentration_level.value,
+            "concentration_level": concentration_level,
             "userId": data["userId"],
             "gameId": data["gameId"],
         },
