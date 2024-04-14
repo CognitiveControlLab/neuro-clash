@@ -10,17 +10,17 @@ To get ready with the initial setup, run
 - `make initial-setup`
 - `pyenv shell $(pyenv local)`
 - `poetry env use $(pyenv local)`
-- `make init-dev`
+- `make init`
 
 ### Experiment Setup
-Install dev dependencies
-- `make init-dev`
+Install dependencies
+- `make init`
 - Install [liblsl](https://github.com/sccn/liblsl/releases)
 
-### EEG tests
-*Note: Make sure you have [Petal Metrics](https://petal.tech/downloads) installed*
+### EEG local live testing
+`make run-local`
 
-View EEG
+Simple View EEG
 - `poetry run muselsl view`
-Record EEG
+Record EEG Sample
 - `poetry run muselsl record --duration 60`
