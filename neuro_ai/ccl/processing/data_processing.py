@@ -6,7 +6,7 @@ class DataProcessing:
     def __init__(self):
 
         # add wave data
-        self.len_wave_hist = 50
+        self.len_wave_hist = 10
         self.wave_data = {}
         self.wave_data["psd_power_avg"] = {}
         self.wave_data["psd_power_avg"]["alpha"] = np.array([])

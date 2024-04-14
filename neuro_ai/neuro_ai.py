@@ -46,8 +46,8 @@ async def eegData(sid, data: dict):
 
     # Concentration detection
     concentration_level = concentration.concentration_level(
-        data_processor.wave_data["psd_power_avg"]["alpha"][-1],
-        data_processor.wave_data["psd_power_avg"]["beta"][-1],
+        data_processor.wave_data["psd_power_avg"]["alpha"][-10],
+        data_processor.wave_data["psd_power_avg"]["beta"][-10],
     )
 
     logger.info(f"Concentration Level: {concentration_level}")
