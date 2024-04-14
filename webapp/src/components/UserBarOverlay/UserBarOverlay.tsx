@@ -32,7 +32,7 @@ function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
         <Row>
           <Bar>
             <h2>{userId}</h2>
-            <IconButton color="primary" onClick={onEEGSetupOpen}>
+            <IconButton color="secondary" onClick={onEEGSetupOpen}>
               <Settings />
             </IconButton>
           </Bar>

@@ -29,7 +29,7 @@ function EndGame() {
         {!myProgress?.isWinner && !tie && <h1><FormattedMessage id="end_game.lose" /></h1>}
         {tie && <h1><FormattedMessage id="end_game.tie" /></h1>}
 
-        <Button variant="contained" color="primary" onClick={onReplay}>
+        <Button variant="contained" color="secondary" onClick={onReplay}>
           <FormattedMessage id="end_game.play_again" />
         </Button>
       </Content>

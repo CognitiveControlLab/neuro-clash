@@ -1,3 +1,4 @@
+import { Paper } from '@mui/material';
 import styled from 'styled-components';
 
 export const Overlay = styled.div`
@@ -15,10 +16,10 @@ export const Row = styled.div`
     justify-content: right;
 `;
 
-export const Bar = styled.div`
+export const Bar = styled(Paper)`
+    background-color: white;
     display: flex;
     flex-direction: row;
-    background-color: #fff;
     padding: 10px;
     border-radius: 10px;
     margin: 10px;

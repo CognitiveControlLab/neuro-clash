@@ -2,7 +2,8 @@ import { Button } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { Container } from './styles';
+import { Title } from './styles';
+import { StarsBackground } from '../../components/Stars';
 
 function Home() {
   const navigate = useNavigate();
@@ -12,13 +13,13 @@ function Home() {
   };
 
   return (
-    <Container>
+    <StarsBackground>
       <Button onClick={onGameStart}>
-        <h1>
+        <Title>
           <FormattedMessage id="home.start" />
-        </h1>
+        </Title>
       </Button>
-    </Container>
+    </StarsBackground>
   );
 }
 

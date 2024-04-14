@@ -63,14 +63,14 @@ function EEGSetupModal(props: EEGSetupProps): JSX.Element {
                   <FormattedMessage id="eegSetup.noDeviceConnected" />
               )}
             </DeviceName>
-            <Button disabled={deviceInfo.status === ConnectionStatus.CONNECTING} variant="outlined" onClick={handleConnectDisconnect}>
+            <Button disabled={deviceInfo.status === ConnectionStatus.CONNECTING} variant="outlined" color="secondary" onClick={handleConnectDisconnect}>
               { deviceInfo.status === ConnectionStatus.DISCONNECTED
                 ? <FormattedMessage id="eegSetup.connect" />
                 : <FormattedMessage id="eegSetup.disconnect" />}
             </Button>
             {/* Only in development */}
             {process.env.NODE_ENV === 'development' && (
-              <Button variant="outlined" onClick={() => connect(true)}>
+              <Button variant="outlined" color="secondary" onClick={() => connect(true)}>
                 <FormattedMessage id="eegSetup.fakeConnect" />
               </Button>
             )}

@@ -11,8 +11,8 @@ function handleProgress(props: Route) {
   const { gameId, userId } = payload;
 
   const gameInstance = Game.getOrCreate(gameId);
-
-  gameInstance.progress(userId, [1, 1, 1, 1, Math.floor(Math.random() * 5) + 1]);
+  console.log('Progress:', payload.data);
+  gameInstance.progress(userId, [Math.floor(Math.random() * 5) + 1]);
 }
 
 export default handleProgress;

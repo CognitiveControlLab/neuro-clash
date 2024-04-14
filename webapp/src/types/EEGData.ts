@@ -10,7 +10,7 @@ export enum EEGDataType {
 export type EEGData = {
   type: EEGDataType.MOCK_EEG,
   data: Array<EEGReading>,
-} |{
+} | {
   type: EEGDataType.EEG,
   data: Array<EEGReading>,
 } | {
