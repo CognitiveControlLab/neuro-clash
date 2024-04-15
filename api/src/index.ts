@@ -11,7 +11,7 @@ import type {
 import { handleEEGData, handleJoinGame, handleToggleReady } from './lib/server';
 import handleProgress from './lib/server/handleProgress';
 
-const port = process.env.PORT ?? 5001;
+const port = process.env.PORT ?? 5000;
 const origin = process.env.ORIGIN ?? 'http://127.0.0.1:3000';
 
 const app: Application = express();
