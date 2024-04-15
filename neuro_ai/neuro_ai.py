@@ -15,14 +15,16 @@ sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 app = socketio.ASGIApp(sio, app)
 
 namespace = "/eeg"
-
-concentration = Concentration()
-
-data_processor = DataProcessing()
-
+clients = {}
 
 @sio.event(namespace=namespace)
 async def connect(sid, environ):
+    clients[sid] = {
+        'concentration': Concentration(),
+        'data_processor': DataProcessing()
+    }
+
+
     logger.info(f"Client connected: {sid}")
 
 
@@ -33,6 +35,8 @@ async def disconnect(sid):
 
 @sio.event(namespace=namespace)
 async def eegData(sid, data: dict):
+    concentration, data_processor = clients[sid].values()
+
     input_data = InputData(**data)
     if not input_data.data.type == "eeg":
         logger.error(f"Invalid data type: {input_data.data.type}")

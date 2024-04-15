@@ -34,7 +34,7 @@ export const StatsOverlay = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 50px;
+  font-size: 70px;
   font-weight: bold;
   color: white;
 `;

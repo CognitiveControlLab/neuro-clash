@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { ConnectionStatus, useEEG } from '../../providers/EEGProvider';
 import { ConnectionState, useGameClient } from '../../providers/GameClientProvider';
 import GameView from './GameView';
-import { Container } from './styles';
 import Lobby from './components/Lobby/Lobby';
 import EndGame from './components/EndGame/EndGame';
+import { StarsBackground } from '../../components/Stars';
 
 function Game() {
   const { gameId } = useParams();
@@ -33,11 +33,11 @@ function Game() {
   }, [sendEEGData, setDataListener, connectionState, deviceInfo.status, gameId]);
 
   return (
-    <Container>
+    <StarsBackground>
       { status === 'waiting' && <Lobby />}
       { status === 'started' && <GameView />}
       { status === 'finished' && <EndGame />}
-    </Container>
+    </StarsBackground>
   );
 }
 

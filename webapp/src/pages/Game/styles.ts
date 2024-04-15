@@ -21,16 +21,12 @@ export const OverlayContainer = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
+  justify-content: center;
 `;
 
 export const StatsOverlay = styled.div`
   display: flex;
-  margin: 10px;
-  border-radius: 10px;
-  align-items: center;
-  width: 600px;
-  height: 250px;
-  background-color: #fff;
-  border: 1px solid #e6e6e6;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+  margin: 80px;
+  border-radius: 80px;
+  width: 50%;
 `;

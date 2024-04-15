@@ -64,13 +64,13 @@ function Lobby() {
         {/* If me does not exist it's because you are a spectator */}
         {me && (
           <Footer>
-            <Button variant="contained" color="primary" onClick={onReady}>
+            <Button variant="contained" color="secondary" onClick={onReady}>
               {me?.ready ? <FormattedMessage id="lobby.not_ready" /> : <FormattedMessage id="lobby.ready" /> }
             </Button>
-            <IconButton color="primary" onClick={onEEGSetupOpen}>
+            <IconButton color="secondary" onClick={onEEGSetupOpen}>
               <Settings />
             </IconButton>
-            <IconButton color="primary" onClick={onCopyToClipboard}>
+            <IconButton color="secondary" onClick={onCopyToClipboard}>
               <CopyAll />
             </IconButton>
           </Footer>

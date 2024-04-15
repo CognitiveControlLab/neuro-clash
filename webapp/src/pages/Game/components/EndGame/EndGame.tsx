@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGameClient } from '../../../../providers/GameClientProvider';
-import { Container, Content } from './styles';
+import { Container, Content, Title } from './styles';
 
 function EndGame() {
   const navigate = useNavigate();
@@ -25,11 +25,12 @@ function EndGame() {
   return (
     <Container>
       <Content>
-        {myProgress?.isWinner && !tie && <h1><FormattedMessage id="end_game.win" /></h1>}
-        {!myProgress?.isWinner && !tie && <h1><FormattedMessage id="end_game.lose" /></h1>}
-        {tie && <h1><FormattedMessage id="end_game.tie" /></h1>}
-
-        <Button variant="contained" color="primary" onClick={onReplay}>
+        <Title>
+          {myProgress?.isWinner && !tie && <FormattedMessage id="end_game.win" />}
+          {!myProgress?.isWinner && !tie && <FormattedMessage id="end_game.lose" />}
+          {tie && <FormattedMessage id="end_game.tie" />}
+        </Title>
+        <Button variant="outlined" color="primary" onClick={onReplay}>
           <FormattedMessage id="end_game.play_again" />
         </Button>
       </Content>

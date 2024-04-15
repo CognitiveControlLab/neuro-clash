@@ -33,7 +33,7 @@ class User {
   constructor(id: string) {
     this.id = id;
     this.ready = false;
-    this.bank = new Array(BEHAVIORS.length).fill(0);
+    this.bank = new Array(BEHAVIORS.length).fill(MAX_BANK / 2);
     this.stateOfMind = new Array(BEHAVIORS.length).fill(0);
     this.production = new Array(BEHAVIORS.length).fill(0);
     this.headPosition = { x: 0, y: 0, z: 0 };
@@ -48,10 +48,14 @@ class User {
     this.stateOfMind = stateOfMind;
   }
 
-  public produce(): void {
+  public produce(): Array<number> {
     this.production = this.stateOfMind;
+    return this.production;
+  }
+
+  public updateBank(production: Array<number>): void {
     this.bank = this.bank.map((value, index) => {
-      const newAssetValue = this.production[index] + value;
+      const newAssetValue = production[index] + value;
 
       if (newAssetValue < 0) {
         return 0;
@@ -81,7 +85,7 @@ class User {
     return this.bank.map((value, index) => ({
       behavior: BEHAVIORS[index],
       value,
-      max: MAX_BANK,
+      max: MAX_BANK / 2,
     }));
   }
 

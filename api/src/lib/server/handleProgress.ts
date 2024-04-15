@@ -11,7 +11,8 @@ function handleProgress(props: Route) {
   const { gameId, userId } = payload;
 
   const gameInstance = Game.getOrCreate(gameId);
-  gameInstance.progress(userId, [0, 0, 0, 0, payload.concentration_level]);
+
+  gameInstance.progress(userId, [payload.concentration_level]);
 }
 
 export default handleProgress;

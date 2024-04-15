@@ -31,8 +31,27 @@ class Game {
     setInterval(() => {
       if (this.status !== GameStatus.STARTED) return;
 
-      this.players.forEach((player) => {
-        player.produce();
+      const production: { production: number[], player: User }[] = [];
+      this.players.forEach((player : User) => {
+        production.push({ production: player.produce(), player });
+      });
+
+      const totalProd = production.reduce((
+        acc: number[],
+        user: { production: number[], player: User },
+      ) => {
+        user.production.forEach((prod: number, index: number) => {
+          acc[index] = (acc[index] || 0) + prod;
+        });
+        return acc;
+      }, Array(production[0].production.length).fill(0));
+
+      production.forEach((userProd) => {
+        const finalProd = userProd.production.map(
+          (prod: number, index: number) => (prod * 2) - totalProd[index],
+        );
+
+        userProd.player.updateBank(finalProd);
       });
     }, GAME_CYCLE);
   }

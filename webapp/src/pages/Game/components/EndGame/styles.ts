@@ -15,3 +15,10 @@ export const Content = styled.div`
   justify-content: center; 
   align-items: center;
 `;
+
+export const Title = styled.div`
+  font-size: 70px;
+  font-weight: bold;
+  color: white;
+  padding: 30px;
+`;
