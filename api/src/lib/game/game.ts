@@ -45,14 +45,11 @@ class Game {
         });
         return acc;
       }, Array(production[0].production.length).fill(0));
-      console.log('prod', production);
-      console.log('total prod ', totalProd);
 
       production.forEach((userProd) => {
         const finalProd = userProd.production.map(
           (prod: number, index: number) => (prod * 2) - totalProd[index],
         );
-        console.log('finalProd ', finalProd);
 
         userProd.player.updateBank(finalProd);
       });
