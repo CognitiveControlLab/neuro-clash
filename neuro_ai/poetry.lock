@@ -1691,19 +1691,7 @@ files = [
 ]
 
 [package.dependencies]
-PyQt5-Qt5 = ">=5.15.2"
 PyQt5-sip = ">=12.13,<13"
-
-[[package]]
-name = "pyqt5-qt5"
-version = "5.15.13"
-description = "The subset of a Qt installation needed by PyQt5."
-optional = false
-python-versions = "*"
-files = [
-    {file = "PyQt5_Qt5-5.15.13-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:92575a9e96a27c4ed67c56c7048ded7461a1655d5d21f0e05064664e6e9fcbdf"},
-    {file = "PyQt5_Qt5-5.15.13-py3-none-macosx_11_0_arm64.whl", hash = "sha256:141859f2ffe04cc6c5db970e2b6ad9f98897805d886a14c52614e3799daab6d6"},
-]
 
 [[package]]
 name = "pyqt5-sip"
