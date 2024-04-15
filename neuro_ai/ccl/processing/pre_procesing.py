@@ -1,4 +1,3 @@
-from loguru import logger
 from typing import List
 import numpy as np
 from ccl.models.eeg import EEGReading
