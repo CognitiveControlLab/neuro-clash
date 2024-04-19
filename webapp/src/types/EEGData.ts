@@ -6,9 +6,9 @@ export enum EEGDataType {
   ACCELEROMETER = 'accelerometer',
 }
 
-export type EEGData = {
+export type EEGData = | {
   type: EEGDataType.EEG,
-  data: EEGReading,
+  data: Array<EEGReading>,
 } | {
   type: EEGDataType.TELEMETRY,
   data: TelemetryData,

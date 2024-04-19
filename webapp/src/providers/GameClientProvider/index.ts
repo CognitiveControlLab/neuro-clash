@@ -1,5 +1,5 @@
-import GameClientProvider, { useGameClient } from './GameClientProvider';
+import GameClientProvider, { useGameClient, ConnectionState } from './GameClientProvider';
 
-export { useGameClient };
+export { useGameClient, ConnectionState };
 
 export default GameClientProvider;

@@ -2,13 +2,15 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import Game from '../pages/game';
-import NotFound from '../pages/notFound/notFound';
+import Home from '../pages/Home';
+import Game from '../pages/Game/Game';
+import NotFound from '../pages/NotFound';
 
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Game />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/:gameId" element={<Game />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

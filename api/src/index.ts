@@ -4,26 +4,15 @@ import type {
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 import express from 'express';
+import { io as clientIo, Socket as ClientSocket } from 'socket.io-client';
+import type {
+  ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData,
+} from './lib/server/types';
+import { handleEEGData, handleJoinGame, handleToggleReady } from './lib/server';
+import handleProgress from './lib/server/handleProgress';
 
-interface ServerToClientEvents {
-  progress: (data: any) => void;
-}
-
-interface ClientToServerEvents {
-  eegData: (data: any) => void;
-}
-
-interface InterServerEvents {
-  notUsedForNow: () => void;
-}
-
-interface SocketData {
-  name: string;
-  age: number;
-}
-
-const port = process.env.PORT || 5000;
-const origin = process.env.ORIGIN || 'http://localhost:3000';
+const port = process.env.PORT ?? 5000;
+const origin = process.env.ORIGIN ?? 'http://127.0.0.1:3000';
 
 const app: Application = express();
 const server = createServer(app);
@@ -43,14 +32,30 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 io.on('connection', (socket) => {
-  socket.on('eegData', (payload) => {
-    if (payload.type === 'accelerometer') {
-      socket.emit('progress', { score: payload.data?.samples?.length ? payload.data.samples[0].x : 0 });
-    }
+  const proxySocket: ClientSocket = clientIo('http://127.0.0.1:9090/eeg', { transports: ['websocket'] });
+
+  proxySocket.on('progress', (payload: any) => {
+    handleProgress({ io, socket, payload });
   });
+
+  socket.on('disconnect', () => {
+    proxySocket.disconnect();
+  });
+
+  socket.on('eegData', (payload: any) => handleEEGData({
+    io, socket, payload, proxySocket,
+  }));
+
+  socket.on('join', (payload: any) => handleJoinGame({
+    io, socket, payload,
+  }));
+
+  socket.on('toggleReady', (payload: any) => handleToggleReady({
+    io, socket, payload,
+  }));
 });
 
 server.listen(port);
 
 // eslint-disable-next-line no-console
-console.log(`[app] Running ... \n[app] Url: http://localhost:${port}`);
+console.log(`[app] Running ... \n[app] Url: http://127.0.0.1:${port}`);

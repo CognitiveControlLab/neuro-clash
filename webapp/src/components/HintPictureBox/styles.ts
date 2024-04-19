@@ -71,6 +71,7 @@ export const ModalContainer = styled(Modal)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
 `;
 
 export const NotDiscoverdIcon = styled(HelpIcon)`
