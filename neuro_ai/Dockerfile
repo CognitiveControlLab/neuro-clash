@@ -23,6 +23,7 @@ COPY poetry.lock pyproject.toml ./
 
 # Install the Python dependencies
 RUN poetry config installer.max-workers 10
+RUN poetry run pip install pyqt5-qt5
 RUN poetry install --no-root --no-cache
 RUN poetry export --without dev -o requirements.txt --without-hashes
 RUN pip install --no-cache-dir -r requirements.txt

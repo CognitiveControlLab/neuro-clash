@@ -14,8 +14,8 @@
     "type-check": "yarn tsc",
     "build:prod": "APP_ENV=production vite build",
     "host": "vite --host",
-    "build:docker": "docker build -t webapp .",
-    "start:docker": "docker run -d -p 3000:3000 webapp"
+    "build:docker": "docker build -t neuro-clash-web-app .",
+    "start:docker": "docker run -d -p 3000:3000 neuro-clash-web-app"
   },
   "dependencies": {
     "@mui/icons-material": "5.8.4",
