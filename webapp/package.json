@@ -23,8 +23,8 @@
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@mui/styled-engine-sc": "5.6.1",
     "@mui/system": "5.8.5",
-    "@react-three/drei": "^9.102.6",
-    "@react-three/fiber": "^8.15.19",
+    "@react-three/drei": "^9.105.4",
+    "@react-three/fiber": "^8.16.2",
     "chart.js": "^4.4.2",
     "dotenv": "^16.4.5",
     "friendly-username-generator": "^2.0.4",
@@ -41,7 +41,7 @@
     "react-toastify": "9.0.8",
     "socket.io-client": "4.7.4",
     "styled-components": "5.3.5",
-    "three": "^0.162.0",
+    "three": "^0.163.0",
     "uuid": "9.0.1"
   },
   "devDependencies": {

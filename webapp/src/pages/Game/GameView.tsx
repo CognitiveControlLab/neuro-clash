@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { Canvas } from '@react-three/fiber';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
+import { Box, useGLTF } from '@react-three/drei';
 import { useGameClient } from '../../providers/GameClientProvider';
 import { Container, OverlayContainer, StatsOverlay } from './styles';
 import CorruptionChart from '../../components/CorruptionChart';
@@ -9,14 +11,27 @@ interface BoxProps {
   rotation: [number, number, number];
 }
 
-function Box(props: BoxProps) {
-  const { position, rotation } = props;
-
+function Robot(props: BoxProps) {
+  const group = useRef();
+  const { nodes, materials } = useGLTF('./win.glb');
+  console.log('Robot', nodes, materials);
   return (
-    <mesh position={position} rotation={rotation}>
-      <boxGeometry />
-      <meshStandardMaterial color="orange" />
-    </mesh>
+    <group ref={group} {...props} dispose={null}>
+      <mesh geometry={nodes.Cube.geometry} material={materials.Material} />
+      {/* <mesh geometry={nodes.Cube001.geometry} material={materials.Material} /> */}
+    </group>
+  );
+}
+
+function Player({ ...props }) {
+  const group = useRef();
+  const { nodes, materials } = useGLTF('./player3.glb');
+  console.log('Player', nodes, materials);
+  return (
+    <group ref={group} {...props} dispose={null}>
+      <mesh geometry={nodes.Cube.geometry} material={materials.Material} />
+      {/* <mesh geometry={nodes.Cube001.geometry} material={materials.Material} /> */}
+    </group>
   );
 }
 
@@ -34,17 +49,14 @@ function GameView() {
   return (
     <Container>
       <Canvas shadows>
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={1} />
         { progress?.map(({ headPosition }: any, index : number) => (
           <Box
             position={[-4 + (index * 8), 0, 0]}
             rotation={[headPosition.x, 0, headPosition.y]}
           />
         ))}
-        <Box
-          position={[0, 0, 0]}
-          rotation={[0, 0, 0]}
-        />
+        <Player position={[0, 0, 0]} />
       </Canvas>
       <OverlayContainer>
         <StatsOverlay>

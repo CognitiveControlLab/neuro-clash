@@ -69,7 +69,8 @@ function EEGSetupModal(props: EEGSetupProps): JSX.Element {
                 : <FormattedMessage id="eegSetup.disconnect" />}
             </Button>
             {/* Only in development */}
-            {process.env.NODE_ENV === 'development' && (
+            {/* {process.env.NODE_ENV === 'development' && ( */}
+            {true && (
               <Button variant="outlined" color="secondary" onClick={() => connect(true)}>
                 <FormattedMessage id="eegSetup.fakeConnect" />
               </Button>
