@@ -3,8 +3,8 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from '../pages/Home';
-import Game from '../pages/Game/Game';
-import NotFound from '../pages/NotFound';
+import Game from '../pages/game/Game'
+import NotFound from '../pages/notFound/NotFound';
 
 function AppRoutes() {
   return (
