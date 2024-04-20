@@ -6,6 +6,7 @@ import GameView from './GameView';
 import Lobby from './components/Lobby/Lobby';
 import EndGame from './components/EndGame/EndGame';
 import { StarsBackground } from '../../components/Stars';
+import UserBarOverlay from '../../components/UserBarOverlay';
 
 function Game() {
   const { gameId } = useParams();
@@ -33,11 +34,13 @@ function Game() {
   }, [sendEEGData, setDataListener, connectionState, deviceInfo.status, gameId]);
 
   return (
-    <StarsBackground>
-      { status === 'waiting' && <Lobby />}
-      { status === 'started' && <GameView />}
-      { status === 'finished' && <EndGame />}
-    </StarsBackground>
+    <UserBarOverlay>
+      <StarsBackground>
+        { status === 'waiting' && <Lobby />}
+        { status === 'started' && <GameView />}
+        { status === 'finished' && <EndGame />}
+      </StarsBackground>
+    </UserBarOverlay>
   );
 }
 

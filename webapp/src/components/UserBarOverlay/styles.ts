@@ -53,3 +53,9 @@ export const GitLink = styled.a`
     font-size: 16px;
     font-weight: bold;
 `;
+
+export const Container = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+`;

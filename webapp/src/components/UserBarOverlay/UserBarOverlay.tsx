@@ -1,9 +1,10 @@
 import { ReactNode, useState } from 'react';
 import { IconButton } from '@mui/material';
-import { Settings, GitHub } from '@mui/icons-material';
+import { Settings, GitHub, PrivacyTip } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import EEGSetup from '../EEGSetup';
 import {
-  Bar, GitLink, LinkWrapper, Overlay, Row,
+  Bar, GitLink, LinkWrapper, Overlay, Row, Container,
 } from './styles';
 import { useGameClient } from '../../providers/GameClientProvider';
 
@@ -27,8 +28,14 @@ function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
 
   const userId = me?.id;
 
+  const navigate = useNavigate();
+
+  const navigateToPrivacy = () => {
+    navigate('/privacy');
+  };
+
   return (
-    <div>
+    <Container>
       <EEGSetup open={eegSetupOpen} onClose={() => onEEGSetupClose()} />
       <Overlay>
         <Row>
@@ -47,11 +54,17 @@ function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
             <GitLink href="https://github.com/CognitiveControlLab/neuro-clash">
               CognitiveControlLab/neuro-clash
             </GitLink>
+            <GitLink onClick={navigateToPrivacy}>
+              <PrivacyTip fontSize="small" />
+            </GitLink>
+            <GitLink onClick={navigateToPrivacy}>
+              Privacy
+            </GitLink>
           </LinkWrapper>
         </Row>
       </Overlay>
       {children}
-    </div>
+    </Container>
   );
 }
 

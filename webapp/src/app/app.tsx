@@ -4,18 +4,15 @@ import {
 import AppProviders from './appProviders';
 import { Background, RoutesContainer } from './styles';
 import AppRoutes from './routes';
-import UserBarOverlay from '../components/UserBarOverlay/UserBarOverlay';
 
 function App() {
   return (
     <AppProviders>
       <Router>
         <Background>
-          <UserBarOverlay>
-            <RoutesContainer>
-              <AppRoutes />
-            </RoutesContainer>
-          </UserBarOverlay>
+          <RoutesContainer>
+            <AppRoutes />
+          </RoutesContainer>
         </Background>
       </Router>
     </AppProviders>

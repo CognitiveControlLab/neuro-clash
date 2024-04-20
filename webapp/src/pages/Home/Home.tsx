@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { Title } from './styles';
 import { StarsBackground } from '../../components/Stars';
+import UserBarOverlay from '../../components/UserBarOverlay';
 
 function Home() {
   const navigate = useNavigate();
@@ -13,13 +14,15 @@ function Home() {
   };
 
   return (
-    <StarsBackground>
-      <Button onClick={onGameStart}>
-        <Title>
-          <FormattedMessage id="home.start" />
-        </Title>
-      </Button>
-    </StarsBackground>
+    <UserBarOverlay>
+      <StarsBackground>
+        <Button onClick={onGameStart}>
+          <Title>
+            <FormattedMessage id="home.start" />
+          </Title>
+        </Button>
+      </StarsBackground>
+    </UserBarOverlay>
   );
 }
 
