@@ -11,16 +11,24 @@ import type {
 import { handleEEGData, handleJoinGame, handleToggleReady } from './lib/server';
 import handleProgress from './lib/server/handleProgress';
 
-const port = process.env.PORT ?? 5000;
-const origin = process.env.ORIGIN ?? 'http://127.0.0.1:3000';
+const host = process.env.NEURO_CLASH_API_HOST ?? '0.0.0.0';
+const port = process.env.NEURO_CLASH_API_PORT ?? '5000';
+
+const webAppHost = process.env.NEURO_CLASH_WEB_APP_HOST ?? '127.0.0.1';
+const webAppPort = process.env.NEURO_CLASH_WEB_APP_HOST ?? '3000';
+
+const aiHost = process.env.NEURO_CLASH_AI_HOST ?? '127.0.0.1';
+const aiPort = process.env.NEURO_CLASH_AI_HOST ?? '9090';
+
+const origin = `http://${webAppHost}:${webAppPort}`;
 
 const app: Application = express();
 const server = createServer(app);
 const io = new Server<
-ClientToServerEvents,
-ServerToClientEvents,
-InterServerEvents,
-SocketData
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
 >(server, {
   cors: {
     origin,
@@ -32,7 +40,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 io.on('connection', (socket) => {
-  const proxySocket: ClientSocket = clientIo('http://127.0.0.1:9090/eeg', { transports: ['websocket'] });
+  const proxySocket: ClientSocket = clientIo(`http://${aiHost}:${aiPort}/eeg`, { transports: ['websocket'] });
 
   proxySocket.on('progress', (payload: any) => {
     handleProgress({ io, socket, payload });
@@ -55,7 +63,7 @@ io.on('connection', (socket) => {
   }));
 });
 
-server.listen(port);
+server.listen(+port, host);
 
 // eslint-disable-next-line no-console
-console.log(`[app] Running ... \n[app] Url: http://127.0.0.1:${port}`);
+console.log(`[app] Running ... \n[app] Url: http://${host}:${port}`);

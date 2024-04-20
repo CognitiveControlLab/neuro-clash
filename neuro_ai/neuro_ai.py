@@ -5,6 +5,7 @@ from ccl.behaviors.concentration import Concentration
 from ccl.models.eeg import InputData
 from ccl.processing.data_processing import DataProcessing
 from ccl.processing.pre_procesing import setup_mne_data
+import os
 
 app = FastAPI()
 
@@ -71,4 +72,7 @@ async def eegData(sid, data: dict):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=9090)
+    host = os.environ.get("NEURO_CLASH_AI_HOST", "0.0.0.0")
+    port = os.environ.get("NEURO_CLASH_AI_PORT", 9090)
+    
+    uvicorn.run(app, host=host, port=port)
