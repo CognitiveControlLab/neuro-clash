@@ -15,10 +15,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: neuro-ai-service
+  name: neuro-clash-ai-service
 spec:
   selector:
-    app: neuro-ai
+    app: neuro-clash-ai
   ports:
     - protocol: TCP
       port: 80
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-app-service
+  name: neuro-clash-web-app-service
 spec:
   selector:
-    app: web-app
+    app: neuro-clash-web-app
   ports:
     - protocol: TCP
       port: 80
