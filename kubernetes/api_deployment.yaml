@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neuro-clash-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neuro-clash-api
+  template:
+    metadata:
+      labels:
+        app: neuro-clash-api
+    spec:
+      containers:
+        - name: neuro-clash-api
+          image: ghcr.io/cognitivecontrollab/neuro-clash-api:latest
+          ports:
+          - containerPort: 8080
+      imagePullSecrets:
+        - name: ghcr-login-secret
+
