@@ -17,5 +17,18 @@ spec:
           image: ghcr.io/cognitivecontrollab/neuro-clash-web-app:latest
           ports:
           - containerPort: 3000
+          env:
+            - name: NEURO_CLASH_API_HOST
+              value: "neuro-clash-api-service"
+            - name: NEURO_CLASH_API_PORT
+              value: "80"
+            - name: NEURO_CLASH_WEB_APP_HOST
+              value: "neuro-clash-web-app-service"
+            - name: NEURO_CLASH_WEB_APP_PORT
+              value: "80"
+            - name: NEURO_CLASH_AI_HOST
+              value: "neuro-clash-ai-service"
+            - name: NEURO_CLASH_AI_PORT
+              value: "80"
       imagePullSecrets:
         - name: ghcr-login-secret
