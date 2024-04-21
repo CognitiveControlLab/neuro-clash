@@ -15,10 +15,10 @@ const host = process.env.NEURO_CLASH_API_HOST ?? '0.0.0.0';
 const port = process.env.NEURO_CLASH_API_PORT ?? '5000';
 
 const webAppHost = process.env.NEURO_CLASH_WEB_APP_HOST ?? '127.0.0.1';
-const webAppPort = process.env.NEURO_CLASH_WEB_APP_HOST ?? '3000';
+const webAppPort = process.env.NEURO_CLASH_WEB_APP_PORT ?? '3000';
 
 const aiHost = process.env.NEURO_CLASH_AI_HOST ?? '127.0.0.1';
-const aiPort = process.env.NEURO_CLASH_AI_HOST ?? '9090';
+const aiPort = process.env.NEURO_CLASH_AI_PORT ?? '9090';
 
 const origin = `http://${webAppHost}:${webAppPort}`;
 
