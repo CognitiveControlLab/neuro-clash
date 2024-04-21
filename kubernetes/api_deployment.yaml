@@ -19,9 +19,9 @@ spec:
             - containerPort: 8080
           env:
             - name: NEURO_CLASH_API_HOST
-              value: "neuro-clash-api-service"
+              value: "0.0.0.0"
             - name: NEURO_CLASH_API_PORT
-              value: "80"
+              value: "5000"
             - name: NEURO_CLASH_WEB_APP_HOST
               value: "neuro-clash-web-app-service"
             - name: NEURO_CLASH_WEB_APP_PORT

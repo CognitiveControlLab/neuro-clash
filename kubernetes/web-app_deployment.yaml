@@ -23,9 +23,9 @@ spec:
             - name: NEURO_CLASH_API_PORT
               value: "80"
             - name: NEURO_CLASH_WEB_APP_HOST
-              value: "neuro-clash-web-app-service"
+              value: "0.0.0.0"
             - name: NEURO_CLASH_WEB_APP_PORT
-              value: "80"
+              value: "3000"
             - name: NEURO_CLASH_AI_HOST
               value: "neuro-clash-ai-service"
             - name: NEURO_CLASH_AI_PORT
