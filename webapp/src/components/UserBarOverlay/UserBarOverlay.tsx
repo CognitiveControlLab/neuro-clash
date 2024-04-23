@@ -2,6 +2,7 @@ import { ReactNode, useState } from 'react';
 import { IconButton } from '@mui/material';
 import { Settings, GitHub, PrivacyTip } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import EEGSetup from '../EEGSetup';
 import {
   Bar, GitLink, LinkWrapper, Overlay, Row, Container,
@@ -58,7 +59,7 @@ function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
               <PrivacyTip fontSize="small" />
             </GitLink>
             <GitLink onClick={navigateToPrivacy}>
-              Privacy
+              <FormattedMessage id="privacy" />
             </GitLink>
           </LinkWrapper>
         </Row>

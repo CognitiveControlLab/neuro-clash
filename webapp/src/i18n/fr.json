@@ -12,6 +12,7 @@
     "title": "Le jeu",
     "start": "Commencer"
   },
+  "privacy": "Confidentialité",
   "eegSetup": {    
     "noDeviceConnected": "Aucun appareil connecté",
     "title": "Configuration de l'EEG",
