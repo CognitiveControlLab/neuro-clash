@@ -1,71 +1,56 @@
 /* eslint-disable max-len */
 function PrivacyNotice() {
   return (
-    <div>
-      <h1>Privacy Policy for Cognitive Control Lab</h1>
-
-      <p>At Neuro Clash, accessible from neuro-clash.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Neuro Clash and how we use it.</p>
+    <div style={{ padding: '30px', width: '60%' }}>
+      <h1>Privacy Policy for Neuro-Clash</h1>
 
       <p>
-        If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us. Our Privacy Policy was generated with the help of
-        <a href="https://www.gdprprivacynotice.com/">GDPR Privacy Policy Generator</a>
+        <strong>Last updated:</strong>
+        April 22, 2024
       </p>
 
-      <h2>General Data Protection Regulation (GDPR)</h2>
-      <p>We are a Data Controller of your information.</p>
+      <p>Neuro-Clash is a non-commercial game developed for entertainment purposes.</p>
 
-      <p>Cognitive Control Lab legal basis for collecting and using the personal information described in this Privacy Policy depends on the Personal Information we collect and the specific context in which we collect the information:</p>
-      <ul>
-        <li>Cognitive Control Lab needs to perform a contract with you</li>
-        <li>You have given Cognitive Control Lab permission to do so</li>
-        <li>Processing your personal information is in Cognitive Control Lab legitimate interests</li>
-        <li>Cognitive Control Lab needs to comply with the law</li>
-      </ul>
+      <h2>1. Information Collection</h2>
 
-      <p>Cognitive Control Lab will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your information to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our policies.</p>
+      <p>Neuro-Clash collects game data solely from an EEG device, measuring users' brain waves. No personal information, such as names, email addresses, or physical addresses, is collected.</p>
 
-      <p>If you are a resident of the European Economic Area (EEA), you have certain data protection rights. If you wish to be informed what Personal Information we hold about you and if you want it to be removed from our systems, please contact us.</p>
-      <p>In certain circumstances, you have the following data protection rights:</p>
-      <ul>
-        <li>The right to access, update or to delete the information we have on you.</li>
-        <li>The right of rectification.</li>
-        <li>The right to object.</li>
-        <li>The right of restriction.</li>
-        <li>The right to data portability</li>
-        <li>The right to withdraw consent</li>
-      </ul>
+      <h2>2. Information Usage</h2>
 
-      <h2>Log Files</h2>
+      <p>The collected game data is used exclusively to make the game function properly and enhance the gaming experience for users.</p>
 
-      <p>Neuro Clash follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services&apos; analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users&apos; movement on the website, and gathering demographic information.</p>
+      <h2>3. Information Sharing</h2>
 
-      <h2>Privacy Policies</h2>
+      <p>Neuro-Clash does not share any user data with third parties. All manipulation of the game data can be accessed on the open-source repository on GitHub.</p>
 
-      <p>You may consult this list to find the Privacy Policy for each of the advertising partners of Neuro Clash.</p>
+      <h2>4. Data Security</h2>
 
-      <p>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Neuro Clash, which are sent directly to users&apos; browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p>
+      <p>We prioritize the security of user data. We employ secured services to store EEG data securely, ensuring protection against unauthorized access or disclosure.</p>
 
-      <p>Note that Neuro Clash has no access to or control over these cookies that are used by third-party advertisers.</p>
+      <h2>5. Cookies and Tracking Technologies</h2>
 
-      <h2>Third Party Privacy Policies</h2>
+      <p>Neuro-Clash does not utilize cookies or similar tracking technologies.</p>
 
-      <p>Neuro Clash&apos;s Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. </p>
+      <h2>6. Access and Update of Information</h2>
 
-      <p>You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers&apos; respective websites.</p>
+      <p>As no personal information is collected or stored, users cannot access or update any information. However, if users have any doubts or concerns, they are encouraged to contact us.</p>
 
-      <h2>Children&apos;s Information</h2>
+      <h2>7. Contact Us</h2>
 
-      <p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p>
+      <p>
+        For any privacy concerns or inquiries regarding Neuro-Clash, users can contact us by emailing&nbsp;
+        <a href="mailto:georgesmainville@hotmail.fr">georgesmainville@hotmail.fr</a>
+        .
+      </p>
 
-      <p>Neuro Clash does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p>
+      <h2>Changes to this Privacy Policy</h2>
 
-      <h2>Online Privacy Policy Only</h2>
+      <p>Neuro-Clash reserves the right to update or modify this privacy policy at any time. Users will be notified of any changes by updating the "Last updated" date at the top of this page.</p>
 
-      <p>Our Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in Neuro Clash. This policy is not applicable to any information collected offline or via channels other than this website.</p>
-
-      <h2>Consent</h2>
-
-      <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
