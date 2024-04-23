@@ -46,12 +46,13 @@ export const LinkWrapper = styled.div`
     margin: 20px;
 `;
 
-export const GitLink = styled.a`
+export const Link = styled.a`
     color: white;
     justify-content: center;
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
+    cursor: default;
 `;
 
 export const Container = styled.div`

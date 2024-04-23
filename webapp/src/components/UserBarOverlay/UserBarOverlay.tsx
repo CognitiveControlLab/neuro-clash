@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { ReactNode, useState } from 'react';
 import { IconButton } from '@mui/material';
 import { Settings, GitHub, PrivacyTip } from '@mui/icons-material';
@@ -5,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import EEGSetup from '../EEGSetup';
 import {
-  Bar, GitLink, LinkWrapper, Overlay, Row, Container,
+  Bar, Link, LinkWrapper, Overlay, Row, Container,
 } from './styles';
 import { useGameClient } from '../../providers/GameClientProvider';
 
@@ -49,18 +50,18 @@ function UserBarOverlay(props: Readonly<UserBarOverlayProps>) {
         </Row>
         <Row>
           <LinkWrapper>
-            <GitLink href="https://github.com/CognitiveControlLab/neuro-clash">
+            <Link href="https://github.com/CognitiveControlLab/neuro-clash">
               <GitHub fontSize="small" />
-            </GitLink>
-            <GitLink href="https://github.com/CognitiveControlLab/neuro-clash">
+            </Link>
+            <Link href="https://github.com/CognitiveControlLab/neuro-clash">
               CognitiveControlLab/neuro-clash
-            </GitLink>
-            <GitLink onClick={navigateToPrivacy}>
+            </Link>
+            <Link onClick={navigateToPrivacy}>
               <PrivacyTip fontSize="small" />
-            </GitLink>
-            <GitLink onClick={navigateToPrivacy}>
+            </Link>
+            <Link onClick={navigateToPrivacy}>
               <FormattedMessage id="privacy" />
-            </GitLink>
+            </Link>
           </LinkWrapper>
         </Row>
       </Overlay>
