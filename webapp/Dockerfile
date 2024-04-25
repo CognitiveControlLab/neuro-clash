@@ -5,7 +5,7 @@ FROM node:17-alpine AS development
 ENV NODE_ENV development
 
 # Set the working directory
-WORKDIR /src
+WORKDIR /app
 
 # Copy package.json and yarn.lock
 COPY package.json yarn.lock ./
@@ -16,6 +16,9 @@ RUN yarn install
 # Copy the entire project
 COPY . .
 
+# Override the .env file #hack
+COPY .env.production.template .env
+
 # Expose port 3000
 EXPOSE 3000
 
@@ -23,4 +26,4 @@ EXPOSE 3000
 RUN yarn build
 
 # Start the app
-CMD ["yarn", "host"]
+CMD ["yarn", "preview"]
