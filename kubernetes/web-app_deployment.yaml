@@ -19,7 +19,7 @@ spec:
           - containerPort: 3000
           env:
             - name: NEURO_CLASH_API_HOST
-              value: "neuro-clash-api-service.default.svc.cluster.local"
+              value: "api.neuro-clash.com"
             - name: NEURO_CLASH_API_PORT
               value: "80"
             - name: NEURO_CLASH_WEB_APP_HOST

@@ -23,7 +23,7 @@ spec:
             - name: NEURO_CLASH_API_PORT
               value: "5000"
             - name: NEURO_CLASH_WEB_APP_HOST
-              value: "neuro-clash-web-app-service.default.svc.cluster.local"
+              value: "neuro-clash.com"
             - name: NEURO_CLASH_WEB_APP_PORT
               value: "80"
             - name: NEURO_CLASH_AI_HOST

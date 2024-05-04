@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: neuro-clash-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: neuro-clash.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: neuro-clash-web-app-service
+            port:
+              number: 80
+              
+  - host: api.neuro-clash.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: neuro-clash-api-service
+            port:
+              number: 80
