@@ -23,11 +23,11 @@ spec:
             - name: NEURO_CLASH_API_PORT
               value: "80"
             - name: NEURO_CLASH_WEB_APP_HOST
-              value: "0.0.0.0"
+              value: "127.0.0.1"
             - name: NEURO_CLASH_WEB_APP_PORT
               value: "3000"
             - name: NEURO_CLASH_AI_HOST
-              value: "neuro-clash-ai-service.default.svc.cluster.local"
+              value: "neuro-clash-ai-service"
             - name: NEURO_CLASH_AI_PORT
               value: "80"
       imagePullSecrets:

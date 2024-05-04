@@ -19,15 +19,15 @@ spec:
           - containerPort: 9090
           env:
             - name: NEURO_CLASH_API_HOST
-              value: "neuro-clash-api-service.default.svc.cluster.local"
+              value: "neuro-clash-api-service"
             - name: NEURO_CLASH_API_PORT
               value: "80"
             - name: NEURO_CLASH_WEB_APP_HOST
-              value: "neuro-clash-web-app-service.default.svc.cluster.local"
+              value: "neuro-clash-web-app-service"
             - name: NEURO_CLASH_WEB_APP_PORT
               value: "80"
             - name: NEURO_CLASH_AI_HOST
-              value: "0.0.0.0"
+              value: "127.0.0.1"
             - name: NEURO_CLASH_AI_PORT
               value: "9090"
       imagePullSecrets:
