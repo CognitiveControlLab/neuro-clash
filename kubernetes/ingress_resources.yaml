@@ -14,7 +14,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: neuro-clash-web-app-ingress-service
+            name: neuro-clash-web-app-service
             port:
               number: 80
               
@@ -25,6 +25,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: neuro-clash-api-ingress-service
+            name: neuro-clash-api-service
             port:
               number: 80

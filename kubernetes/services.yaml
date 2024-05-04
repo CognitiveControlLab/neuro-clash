@@ -1,3 +1,9 @@
+# ClusterIP service is only accessible from within the cluster
+# NodePort exposes the service on a port on each node in the cluster
+# LoadBalancer service exposes the service externally using a cloud provider's load balancer.
+
+# For now, since web app and api are public facing (called by the browser), we will use NodePort
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,20 +15,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 5000
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: neuro-clash-ai-service
-spec:
-  selector:
-    app: neuro-clash-ai
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 9090
+  type: NodePort
 
 ---
 
@@ -37,35 +30,21 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
+  type: NodePort
 
 ---
-
-# Ingresses
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: neuro-clash-web-app-ingress-service
+  name: neuro-clash-ai-service
 spec:
   selector:
-    app: neuro-clash-web-app
+    app: neuro-clash-ai
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3000
-  type: NodePort
+      targetPort: 9090
+  type: ClusterIP
 
 ---
-  
-apiVersion: v1
-kind: Service
-metadata:
-  name: neuro-clash-api-ingress-service
-spec:
-  selector:
-    app: neuro-clash-api
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 5000
-  type: NodePort
