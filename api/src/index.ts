@@ -25,10 +25,10 @@ const origin = `http://${webAppHost}:${webAppPort}`;
 const app: Application = express();
 const server = createServer(app);
 const io = new Server<
-  ClientToServerEvents,
-  ServerToClientEvents,
-  InterServerEvents,
-  SocketData
+ClientToServerEvents,
+ServerToClientEvents,
+InterServerEvents,
+SocketData
 >(server, {
   cors: {
     origin,
