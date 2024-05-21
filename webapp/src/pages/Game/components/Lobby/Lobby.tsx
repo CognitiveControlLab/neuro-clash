@@ -30,6 +30,18 @@ function Lobby() {
   const onReady = () => {
     if (deviceInfo.status === 'DISCONNECTED') {
       setEEGSetupOpen(true);
+      // TODO: Remove this
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://api.neuro-clash.com:80');
+          const jsonData = await response.json();
+          console.log(jsonData, 'Call to backend api')
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      
+      fetchData();
       return;
     }
     toggleReady();
