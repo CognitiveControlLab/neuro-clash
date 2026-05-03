@@ -42,7 +42,7 @@
     "socket.io-client": "4.7.4",
     "styled-components": "5.3.5",
     "three": "^0.162.0",
-    "uuid": "9.0.1"
+    "uuid": "14.0.0"
   },
   "devDependencies": {
     "@stylelint/postcss-css-in-js": "0.38.0",
